@@ -1,0 +1,200 @@
+import React from 'react';
+import { 
+  FileText, 
+  GraduationCap, 
+  Phone, 
+  ChevronRight, 
+  Award 
+} from 'lucide-react';
+import { HERO_IMAGES } from '../data/mockData';
+
+interface EnlacesScreenProps {
+  onNavigateToSolicitar: () => void;
+  onNavigateToServicios: () => void;
+  onOpenDiplomas: () => void;
+  onOpenContacto: () => void;
+}
+
+export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
+  onNavigateToSolicitar,
+  onNavigateToServicios,
+  onOpenDiplomas,
+  onOpenContacto,
+}) => {
+  return (
+    <div className="flex flex-col items-center w-full px-5 pb-28 pt-2">
+      {/* Brand Emblem / Avatar */}
+      <div className="relative mb-3 flex items-center justify-center">
+        <div className="w-22 h-22 rounded-full bg-[#0a1829] flex items-center justify-center shadow-lg border-[3px] border-[#BD944D]/80 p-1">
+          <div className="w-full h-full rounded-full border border-[#BD944D]/40 flex items-center justify-center bg-[#071322]">
+            <span className="font-serif-brand text-2xl font-bold tracking-wider text-[#BD944D]">
+              CC
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Brand Titles */}
+      <div className="text-center mb-6">
+        <h1 className="text-2xl sm:text-[28px] font-extrabold tracking-tight text-[#102338] uppercase">
+          COPY CENTRO
+        </h1>
+        <h2 className="text-sm font-semibold tracking-widest text-[#102338] uppercase mt-0.5">
+          <span className="text-[#BD944D] font-bold mr-1">&</span> EMPASTADOS
+        </h2>
+        
+        <p className="text-[12px] font-bold tracking-wider text-[#966b1a] uppercase mt-3">
+          EMPASTADOS Y PORTADIPLOMAS
+        </p>
+        
+        <p className="font-serif-brand italic text-xs text-slate-600 mt-1 max-w-xs mx-auto">
+          “Una presentación a la altura de tu esfuerzo.”
+        </p>
+      </div>
+
+      {/* Two Showcase Cards Side-by-Side */}
+      <div className="grid grid-cols-2 gap-3 w-full mb-5">
+        {/* Card 1: Acabados en Oro */}
+        <div className="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 shadow-md text-left select-none transition-transform hover:shadow-lg">
+          <img
+            src={HERO_IMAGES.acabadosOro}
+            alt="Tesis con acabados en oro"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent transition-opacity group-hover:opacity-90" />
+          <div className="absolute bottom-2.5 left-3 right-2">
+            <span className="text-white text-xs sm:text-[13px] font-semibold leading-tight drop-shadow-sm block">
+              Acabados en Oro
+            </span>
+          </div>
+        </div>
+
+        {/* Card 2: Portadiplomas Finos */}
+        <div className="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 shadow-md text-left select-none transition-transform hover:shadow-lg">
+          <img
+            src={HERO_IMAGES.portadiplomas}
+            alt="Portadiplomas finos institucionales"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent transition-opacity group-hover:opacity-90" />
+          <div className="absolute bottom-2.5 left-3 right-2">
+            <span className="text-white text-xs sm:text-[13px] font-semibold leading-tight drop-shadow-sm block">
+              Portadiplomas Finos
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Primary Action Links Stack */}
+      <div className="w-full space-y-3 mb-6">
+        {/* Item 1: Empastados */}
+        <button
+          onClick={onNavigateToSolicitar}
+          className="w-full bg-[#0d1f33] hover:bg-[#122842] text-white p-3.5 sm:p-4 rounded-2xl shadow-md transition-all active:scale-[0.985] flex items-center justify-between text-left cursor-pointer border border-[#BD944D]/20 group"
+        >
+          <div className="flex items-center gap-3.5 min-w-0">
+            <div className="w-10 h-10 rounded-xl bg-[#162e49] flex items-center justify-center shrink-0 border border-[#BD944D]/30 text-[#BD944D]">
+              <FileText className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-[15px] font-bold text-white tracking-tight">
+                  Empastados
+                </span>
+                <span className="bg-[#24354b] text-[#edbf74] text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wider uppercase">
+                  TESIS
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-300 truncate mt-0.5">
+                Solicitud, modelos y seguimiento
+              </p>
+            </div>
+          </div>
+
+          <div className="w-8 h-8 rounded-full bg-[#1b3452] flex items-center justify-center shrink-0 text-slate-300 group-hover:text-white group-hover:bg-[#254366] transition-colors ml-2">
+            <ChevronRight className="w-4 h-4" />
+          </div>
+        </button>
+
+        {/* Item 2: Diplomas */}
+        <button
+          onClick={onOpenDiplomas}
+          className="w-full bg-[#0d1f33] hover:bg-[#122842] text-white p-3.5 sm:p-4 rounded-2xl shadow-md transition-all active:scale-[0.985] flex items-center justify-between text-left cursor-pointer border border-[#BD944D]/20 group"
+        >
+          <div className="flex items-center gap-3.5 min-w-0">
+            <div className="w-10 h-10 rounded-xl bg-[#162e49] flex items-center justify-center shrink-0 border border-[#BD944D]/30 text-[#BD944D]">
+              <GraduationCap className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-[15px] font-bold text-white tracking-tight">
+                  Diplomas
+                </span>
+                <span className="bg-[#24354b] text-[#edbf74] text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wider uppercase">
+                  GRADUACIÓN
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-300 truncate mt-0.5">
+                Portadiplomas y paquetes
+              </p>
+            </div>
+          </div>
+
+          <div className="w-8 h-8 rounded-full bg-[#1b3452] flex items-center justify-center shrink-0 text-slate-300 group-hover:text-white group-hover:bg-[#254366] transition-colors ml-2">
+            <ChevronRight className="w-4 h-4" />
+          </div>
+        </button>
+
+        {/* Item 3: Contacto */}
+        <button
+          onClick={onOpenContacto}
+          className="w-full bg-[#0d1f33] hover:bg-[#122842] text-white p-3.5 sm:p-4 rounded-2xl shadow-md transition-all active:scale-[0.985] flex items-center justify-between text-left cursor-pointer border border-[#BD944D]/20 group"
+        >
+          <div className="flex items-center gap-3.5 min-w-0">
+            <div className="w-10 h-10 rounded-xl bg-[#162e49] flex items-center justify-center shrink-0 border border-[#BD944D]/30 text-[#BD944D]">
+              <Phone className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-[15px] font-bold text-white tracking-tight">
+                  Contacto
+                </span>
+                <span className="inline-flex items-center gap-1 bg-[#24354b] text-[#edbf74] text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wider uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#edbf74] animate-pulse" />
+                  DIRECTO
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-300 truncate mt-0.5">
+                Horario, WhatsApp y atención directa
+              </p>
+            </div>
+          </div>
+
+          <div className="w-8 h-8 rounded-full bg-[#1b3452] flex items-center justify-center shrink-0 text-slate-300 group-hover:text-white group-hover:bg-[#254366] transition-colors ml-2">
+            <ChevronRight className="w-4 h-4" />
+          </div>
+        </button>
+      </div>
+
+      {/* Institutional Guarantee Card */}
+      <div 
+        onClick={onNavigateToServicios}
+        className="w-full bg-slate-100 hover:bg-slate-200/80 transition-colors p-4 rounded-2xl flex items-center gap-3.5 cursor-pointer border border-slate-200/70 shadow-xs"
+      >
+        <div className="w-10 h-10 rounded-xl bg-amber-100/90 text-amber-700 flex items-center justify-center shrink-0">
+          <Award className="w-5 h-5" />
+        </div>
+        <div>
+          <h4 className="text-[13px] font-bold text-slate-900 leading-tight">
+            Calidad Institucional Garantizada
+          </h4>
+          <p className="text-[11px] text-slate-500 mt-0.5">
+            Tesis, tesinas, tomos de jurisprudencia
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
