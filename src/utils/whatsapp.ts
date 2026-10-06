@@ -19,7 +19,7 @@ export const formatEmpastadoMessage = (
   personalizaciones: string
 ): string => {
   const modalidadText = config.modalidad === 'solo_empastado' ? 'Solo empastado' : 'Impresión + Empastado';
-  const papelText = config.paperType === 'bond_normal' ? 'Bond Normal' : 'Hilo / Algodón';
+  const papelText = config.paperType === 'bond_normal' ? 'Normal' : 'Papel algodón de tesis';
 
   let message = `Hola, quisiera solicitar información sobre este trabajo.\n\n` +
     `Servicio: Empastado\n` +
@@ -28,9 +28,11 @@ export const formatEmpastadoMessage = (
     `Cantidad: ${config.copies} ${config.copies === 1 ? 'tomo' : 'tomos'}\n` +
     `Papel: ${papelText}\n` +
     `Páginas: ${config.pages}\n` +
-    `Personalización: ${personalizaciones}\n` +
-    `Diseño seleccionado: ${config.selectedDesignTitle || 'N.º 01 · Maestría'}\n` +
-    `Archivo listo: ${config.uploadedFileName ? `Sí (${config.uploadedFileName})` : 'Por coordinar'}\n`;
+    `Personalización: ${personalizaciones}\n`;
+
+  if (config.uploadedFileName) {
+    message += `Archivo adjunto: ${config.uploadedFileName}\n`;
+  }
 
   if (config.observaciones?.trim()) {
     message += `Observaciones: ${config.observaciones.trim()}\n`;

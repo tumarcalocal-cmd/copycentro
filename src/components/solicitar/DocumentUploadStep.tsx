@@ -43,22 +43,35 @@ export const DocumentUploadStep: React.FC<DocumentUploadStepProps> = ({
             <UploadCloud className="w-6 h-6" />
           </div>
 
-          <p className="text-xs font-bold text-slate-900 truncate max-w-xs mx-auto">
-            {fileName} seleccionado
-          </p>
-          <p className="text-[11px] text-slate-500 mt-1">
-            Tamaño: {fileSize} · {detectedPages} páginas detectadas
-          </p>
+          {fileName ? (
+            <>
+              <p className="text-xs font-bold text-slate-900 truncate max-w-xs mx-auto">
+                {fileName}
+              </p>
+              <p className="text-[11px] text-slate-500 mt-1">
+                {fileSize ? `Tamaño: ${fileSize}` : ''} {detectedPages ? `· ${detectedPages} páginas detectadas` : ''}
+              </p>
 
-          <div className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full mt-2.5">
-            <Check className="w-3.5 h-3.5" />
-            <span>Archivo listo para vinculación</span>
-          </div>
+              <div className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full mt-2.5">
+                <Check className="w-3.5 h-3.5" />
+                <span>Archivo listo para vinculación</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="text-xs font-bold text-slate-800">
+                Toca aquí para adjuntar tu tesis o documento (opcional)
+              </p>
+              <p className="text-[11px] text-slate-500 mt-1">
+                Formatos permitidos: PDF o Word (.doc, .docx)
+              </p>
+            </>
+          )}
         </div>
 
         <div className="flex items-center gap-1.5 text-[11px] text-slate-500 mt-2 px-1">
           <Info className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-          <span>El PDF se comparte con el negocio al confirmar la solicitud.</span>
+          <span>El documento se compartirá directamente con el taller al confirmar la solicitud.</span>
         </div>
       </div>
 

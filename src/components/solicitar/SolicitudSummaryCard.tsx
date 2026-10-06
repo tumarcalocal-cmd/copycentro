@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileCheck, MessageCircle, Shield, Loader2 } from 'lucide-react';
+import { FileCheck, MessageCircle, Loader2 } from 'lucide-react';
 import { EmpastadoConfig } from '../../types';
 
 interface SolicitudSummaryCardProps {
@@ -62,7 +62,7 @@ export const SolicitudSummaryCard: React.FC<SolicitudSummaryCardProps> = ({
         <div className="flex justify-between items-center text-slate-300">
           <span>Papel:</span>
           <span className="font-semibold text-white">
-            {config.paperType === 'bond_normal' ? 'Bond Normal' : 'Hilo / Algodón'}
+            {config.paperType === 'bond_normal' ? 'Normal' : 'Papel algodón de tesis'}
           </span>
         </div>
 
@@ -78,19 +78,15 @@ export const SolicitudSummaryCard: React.FC<SolicitudSummaryCardProps> = ({
           </span>
         </div>
 
-        <div className="flex justify-between items-center text-slate-300">
-          <span>Diseño seleccionado:</span>
-          <span className="font-semibold text-[#edbf74] truncate max-w-[200px] text-right">
-            {config.selectedDesignTitle || 'N.º 01 · Maestría'}
-          </span>
-        </div>
-
-        <div className="flex justify-between items-center text-slate-300">
-          <span>Archivo adjunto:</span>
-          <span className="font-semibold text-[#edbf74] truncate max-w-[190px]">
-            {config.uploadedFileName}
-          </span>
-        </div>
+        {/* Solo mostrar archivo adjunto si el usuario realmente adjuntó un archivo */}
+        {Boolean(config.uploadedFileName) && (
+          <div className="flex justify-between items-center text-slate-300">
+            <span>Archivo adjunto:</span>
+            <span className="font-semibold text-[#edbf74] truncate max-w-[190px]">
+              {config.uploadedFileName}
+            </span>
+          </div>
+        )}
 
         {config.observaciones?.trim() && (
           <div className="pt-2 border-t border-white/10 text-slate-300">
@@ -126,9 +122,8 @@ export const SolicitudSummaryCard: React.FC<SolicitudSummaryCardProps> = ({
         )}
       </button>
 
-      <p className="text-[10px] text-slate-400 text-center mt-2.5 flex items-center justify-center gap-1">
-        <Shield className="w-3 h-3 text-[#BD944D]" />
-        <span>El taller confirmará disponibilidad, detalles y precio directamente por WhatsApp.</span>
+      <p className="text-[11px] text-slate-400 text-center mt-3">
+        El taller confirmará disponibilidad, detalles y precio directamente por WhatsApp.
       </p>
     </div>
   );

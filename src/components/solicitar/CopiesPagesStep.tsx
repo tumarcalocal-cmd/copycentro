@@ -83,25 +83,25 @@ export const CopiesPagesStep: React.FC<CopiesPagesStepProps> = ({
           <button
             type="button"
             onClick={() => onChangePaperType('bond_normal')}
-            className={`min-h-[44px] py-2.5 px-3 rounded-xl text-xs font-semibold text-center transition-all cursor-pointer flex items-center justify-center ${
+            className={`min-h-[48px] py-2.5 px-3 rounded-xl text-xs font-semibold text-center transition-all cursor-pointer flex items-center justify-center ${
               paperType === 'bond_normal'
-                ? 'bg-[#ffdeab] text-[#5f4100] shadow-xs ring-1 ring-[#edbf74]'
+                ? 'bg-[#102338] text-white shadow-md ring-2 ring-[#BD944D]/50'
                 : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-300'
             }`}
           >
-            Bond Normal
+            Normal
           </button>
 
           <button
             type="button"
             onClick={() => onChangePaperType('hilo_algodon')}
-            className={`min-h-[44px] py-2.5 px-3 rounded-xl text-xs font-semibold text-center transition-all cursor-pointer flex items-center justify-center ${
+            className={`min-h-[48px] py-2.5 px-3 rounded-xl text-xs font-semibold text-center transition-all cursor-pointer flex items-center justify-center leading-snug ${
               paperType === 'hilo_algodon'
-                ? 'bg-[#ffdeab] text-[#5f4100] shadow-xs ring-1 ring-[#edbf74]'
+                ? 'bg-[#102338] text-white shadow-md ring-2 ring-[#BD944D]/50'
                 : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-300'
             }`}
           >
-            Hilo / Algodón
+            Imprimir en papel algodon de tesis
           </button>
         </div>
 

@@ -9,17 +9,16 @@ import { Header } from './components/Header';
 import { EnlacesScreen } from './components/EnlacesScreen';
 import { SolicitarScreen } from './components/SolicitarScreen';
 import { ServiciosScreen } from './components/ServiciosScreen';
+import { PortadiplomasScreen } from './components/PortadiplomasScreen';
+import { ContactoScreen } from './components/ContactoScreen';
+import { ConsultaPedidoScreen } from './components/ConsultaPedidoScreen';
 import { BottomNav } from './components/BottomNav';
-import { ContactModal } from './components/ContactModal';
-import { DiplomasModal } from './components/DiplomasModal';
 import { Smartphone, Monitor, WifiOff } from 'lucide-react';
 import { useOnlineStatus } from './hooks/useOnlineStatus';
 
 export default function App() {
   const isOnline = useOnlineStatus();
   const [activeTab, setActiveTab] = useState<TabType>('enlaces');
-  const [isContactOpen, setIsContactOpen] = useState(false);
-  const [isDiplomasOpen, setIsDiplomasOpen] = useState(false);
   const [serviciosSubTab, setServiciosSubTab] = useState<'disenos' | 'rastreo'>('disenos');
   const [empastadoConfig, setEmpastadoConfig] = useState<EmpastadoConfig>({
     modalidad: 'solo_empastado',
@@ -30,9 +29,9 @@ export default function App() {
     goldLogo: true,
     spineLettering: true,
     cdPocket: false,
-    uploadedFileName: 'documento_tesis_final.pdf',
-    uploadedFileSize: '4.8 MB',
-    detectedPages: 80,
+    uploadedFileName: null,
+    uploadedFileSize: null,
+    detectedPages: null,
     observaciones: '',
     selectedDesignId: 'des-01',
     selectedDesignTitle: 'N.º 01 · Maestría',
@@ -69,6 +68,21 @@ export default function App() {
   const handleGoToServicios = (subTab: 'disenos' | 'rastreo' = 'disenos') => {
     setServiciosSubTab(subTab);
     setActiveTab('servicios');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleGoToDiplomas = () => {
+    setActiveTab('diplomas');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleGoToRastreo = () => {
+    setActiveTab('rastreo');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleGoToContacto = () => {
+    setActiveTab('contacto');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -115,19 +129,20 @@ export default function App() {
 
         {/* Top Header with Back Button and Profile Icon */}
         <Header 
-          onOpenContact={() => setIsContactOpen(true)} 
+          onOpenContact={handleGoToContacto} 
           activeTab={activeTab}
           onNavigateToInicio={handleGoToInicio}
         />
 
-        {/* Tab Views */}
+        {/* Minisite Seamless Page Views (no awkward popups, natural page scroll) */}
         <main className="flex-1 w-full overflow-y-auto">
           {activeTab === 'enlaces' && (
             <EnlacesScreen
               onNavigateToSolicitar={() => handleGoToSolicitar({ modalidad: 'solo_empastado' })}
               onNavigateToServicios={() => handleGoToServicios('disenos')}
-              onOpenDiplomas={() => setIsDiplomasOpen(true)}
-              onOpenContacto={() => setIsContactOpen(true)}
+              onOpenDiplomas={handleGoToDiplomas}
+              onOpenRastreo={handleGoToRastreo}
+              onOpenContacto={handleGoToContacto}
             />
           )}
 
@@ -137,7 +152,7 @@ export default function App() {
               setConfig={setEmpastadoConfig}
               onNavigateToInicio={handleGoToInicio}
               onNavigateToDisenos={() => handleGoToServicios('disenos')}
-              onNavigateToRastreo={() => handleGoToServicios('rastreo')}
+              onNavigateToRastreo={handleGoToRastreo}
               shouldScrollToDesign={shouldScrollToDesign}
               onClearScrollToDesign={() => setShouldScrollToDesign(false)}
             />
@@ -152,6 +167,25 @@ export default function App() {
               selectedDesignId={empastadoConfig.selectedDesignId}
             />
           )}
+
+          {activeTab === 'diplomas' && (
+            <PortadiplomasScreen
+              onNavigateToInicio={handleGoToInicio}
+            />
+          )}
+
+          {activeTab === 'rastreo' && (
+            <ConsultaPedidoScreen
+              onNavigateToInicio={handleGoToInicio}
+              onNavigateToSolicitar={() => handleGoToSolicitar()}
+            />
+          )}
+
+          {activeTab === 'contacto' && (
+            <ContactoScreen
+              onNavigateToInicio={handleGoToInicio}
+            />
+          )}
         </main>
 
         {/* Fixed Bottom Navigation */}
@@ -161,21 +195,6 @@ export default function App() {
             setActiveTab(tab);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }} 
-        />
-
-        {/* Interactive Modals */}
-        <ContactModal 
-          isOpen={isContactOpen} 
-          onClose={() => setIsContactOpen(false)} 
-        />
-
-        <DiplomasModal 
-          isOpen={isDiplomasOpen} 
-          onClose={() => setIsDiplomasOpen(false)}
-          onSelectEmpastados={() => {
-            setIsDiplomasOpen(false);
-            handleGoToSolicitar({ colorId: 'navy' });
-          }}
         />
       </div>
     </div>

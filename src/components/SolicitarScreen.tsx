@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import { COVER_COLORS } from '../data/mockData';
 import { EmpastadoConfig } from '../types';
-import { ReturnButton } from './common/ReturnButton';
 import { ModalidadStep } from './solicitar/ModalidadStep';
 import { ColorStep } from './solicitar/ColorStep';
 import { CopiesPagesStep } from './solicitar/CopiesPagesStep';
@@ -66,9 +65,6 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
 
   return (
     <div className="flex flex-col w-full px-4 sm:px-5 pb-28 pt-1">
-      {/* Top Volver al inicio button */}
-      <ReturnButton onClick={onNavigateToInicio} />
-
       {/* Screen Title & Badge */}
       <div className="flex items-center justify-between mb-2">
         <div>
@@ -90,18 +86,18 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
       </p>
 
       {/* Top Segmented Subtabs */}
-      <div className="grid grid-cols-3 gap-1 p-1 bg-slate-200/70 rounded-2xl mb-6">
+      <div className="grid grid-cols-2 gap-1 p-1 bg-slate-200/70 rounded-2xl mb-6">
         <button
           type="button"
           onClick={() => setActiveSubTab('solicitar')}
           className={`flex items-center justify-center gap-1.5 min-h-[44px] py-2 px-2 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
             activeSubTab === 'solicitar'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'bg-[#102338] text-white shadow-md'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
           }`}
         >
-          <Send className="w-3.5 h-3.5 text-[#BD944D]" />
-          <span>Solicitar</span>
+          <Send className={`w-3.5 h-3.5 ${activeSubTab === 'solicitar' ? 'text-[#BD944D]' : 'text-slate-500'}`} />
+          <span>Cotizar</span>
         </button>
 
         <button
@@ -112,28 +108,12 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
           }}
           className={`flex items-center justify-center gap-1.5 min-h-[44px] py-2 px-2 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
             activeSubTab === 'disenos'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'bg-[#102338] text-white shadow-md'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
           }`}
         >
-          <Palette className="w-3.5 h-3.5 text-slate-500" />
-          <span>Diseños</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => {
-            setActiveSubTab('pedidos');
-            onNavigateToRastreo();
-          }}
-          className={`flex items-center justify-center gap-1.5 min-h-[44px] py-2 px-2 text-xs font-semibold rounded-xl transition-all cursor-pointer ${
-            activeSubTab === 'pedidos'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-600 hover:text-slate-900'
-          }`}
-        >
-          <FileSearch className="w-3.5 h-3.5 text-slate-500" />
-          <span>Consulte su pedido</span>
+          <Palette className={`w-3.5 h-3.5 ${activeSubTab === 'disenos' ? 'text-[#BD944D]' : 'text-slate-500'}`} />
+          <span>Modelos</span>
         </button>
       </div>
 

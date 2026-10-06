@@ -23,10 +23,10 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={onNavigateToInicio}
-            className="inline-flex items-center gap-1.5 min-h-[44px] px-3 py-2 text-xs font-bold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 rounded-xl border border-slate-200 shadow-xs transition-transform active:scale-95 cursor-pointer"
+            className="inline-flex items-center gap-2 min-h-[44px] px-3.5 py-2 text-xs font-bold text-white bg-[#102338] hover:bg-[#183454] active:bg-[#071322] rounded-xl shadow-sm transition-transform active:scale-95 cursor-pointer"
             aria-label="Volver a la pantalla de Inicio"
           >
-            <ArrowLeft className="w-4 h-4 text-[#BD944D]" />
+            <ArrowLeft className="w-4 h-4 text-white" />
             <span>Inicio</span>
           </button>
         ) : (
@@ -58,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-3">
                 <div className="w-11 h-11 rounded-full bg-[#000c1d] text-[#BD944D] flex items-center justify-center font-bold text-sm border-2 border-[#BD944D]">
-                  CC
+                  PDP
                 </div>
                 <div>
                   <h3 className="font-bold text-slate-900 text-sm">Portadiplomas Panamá</h3>

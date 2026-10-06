@@ -1,4 +1,4 @@
-export type TabType = 'enlaces' | 'servicios' | 'solicitar';
+export type TabType = 'enlaces' | 'servicios' | 'solicitar' | 'diplomas' | 'rastreo' | 'contacto';
 
 export type SubTabServicios = 'solicitar' | 'disenos' | 'rastreo';
 
@@ -45,17 +45,20 @@ export interface DiplomaConfig {
   observaciones?: string;
 }
 
-export interface DesignShowcase {
+export interface ModeloShowcase {
   id: string;
   number: string;
   category: string;
   title: string;
   description: string;
   image: string;
-  colorHex: string;
-  colorName: string;
-  colorId: string;
+  colorHex?: string;
+  colorName?: string;
+  colorId?: string;
+  university?: string;
 }
+
+export type DesignShowcase = ModeloShowcase;
 
 export interface OrderTrackResult {
   orderId: string;

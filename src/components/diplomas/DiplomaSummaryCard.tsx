@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileCheck, MessageSquare, Shield, Loader2 } from 'lucide-react';
+import { FileCheck, MessageSquare, Loader2 } from 'lucide-react';
 import { DiplomaConfig } from '../../types';
 
 interface DiplomaSummaryCardProps {
@@ -82,9 +82,8 @@ export const DiplomaSummaryCard: React.FC<DiplomaSummaryCardProps> = ({
         )}
       </button>
 
-      <p className="text-[10px] text-slate-400 text-center pt-1 flex items-center justify-center gap-1">
-        <Shield className="w-3 h-3 text-[#BD944D]" />
-        <span>El taller confirmará disponibilidad, detalles y precio directamente por WhatsApp.</span>
+      <p className="text-[11px] text-slate-400 text-center pt-1">
+        El taller confirmará disponibilidad, detalles y precio directamente por WhatsApp.
       </p>
     </div>
   );

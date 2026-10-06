@@ -49,7 +49,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) 
           <span className={`text-[11px] mt-1 font-semibold tracking-tight ${
             activeTab === 'servicios' ? 'text-[#875d14] font-bold' : 'text-slate-600'
           }`}>
-            Diseños
+            Modelos
           </span>
         </button>
 

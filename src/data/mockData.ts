@@ -1,14 +1,10 @@
 import { CoverColor, DesignShowcase, OrderTrackResult } from '../types';
 
-import bookGoldImg from '../assets/images/book_gold_embossing_1791164963344.jpg';
-import diplomaHolderImg from '../assets/images/diploma_holder_navy_1791164973669.jpg';
-import thesisMaestriaImg from '../assets/images/thesis_sample_maestria_1791164982546.jpg';
-import thesisLicenciaturaImg from '../assets/images/thesis_sample_licenciatura_1791164992654.jpg';
-import thesisPercalinaImg from '../assets/images/thesis_sample_percalina_1791165001473.jpg';
+
 
 export const HERO_IMAGES = {
-  acabadosOro: bookGoldImg,
-  portadiplomas: diplomaHolderImg,
+  acabadosOro: '/modelos/tesis4.jpg',
+  portadiplomas: '/modelos/tesis6.jpg',
 };
 
 export const COVER_COLORS: CoverColor[] = [
@@ -21,41 +17,94 @@ export const COVER_COLORS: CoverColor[] = [
   { id: 'green', name: 'Verde Bosque Notarial', hex: '#14532D', university: 'UDELAS' },
 ];
 
-export const DESIGN_SHOWCASES: DesignShowcase[] = [
+export const MODELOS_SHOWCASES: DesignShowcase[] = [
   {
-    id: 'des-01',
-    number: 'Nº 01',
-    category: 'Maestría',
-    title: 'Empastado Tesis Maestría en Cuero Azul Marino con Grabado Dorado',
-    description: 'Piel sintética de alta densidad, letras estampadas al calor y cintillo separador de seda.',
-    image: thesisMaestriaImg,
-    colorHex: '#0B2341',
-    colorName: 'Azul Marino',
-    colorId: 'navy',
-  },
-  {
-    id: 'des-02',
-    number: 'Nº 02',
-    category: 'Licenciatura',
-    title: 'Empastado Licenciatura Vinotinto con Logo Troquelado y Lomo Personalizado',
-    description: 'Alineado con especificaciones UTP, UP y UDILAS. Tipografía dorada indeleble de alta duración.',
-    image: thesisLicenciaturaImg,
+    id: 'mod-01',
+    number: 'Modelo 01',
+    category: 'Vino Institucional',
+    title: 'Tesis en Vino Institucional con Grabado Dorado',
+    description: 'Empastado oficial para Universidad de Panamá en cuerina vinotinto con letras doradas al calor y funda de protección individual.',
+    image: '/images/modelos/tesis4.jpg',
     colorHex: '#541525',
     colorName: 'Vino Institucional',
     colorId: 'wine',
+    university: 'Universidad de Panamá (UP)',
   },
   {
-    id: 'des-03',
-    number: 'Nº 03',
-    category: 'Tomo Doble',
-    title: 'Empastado Tomo Doble Verde Oscuro con Acabado Percalina',
-    description: 'Textura de tejido premium de alta resistencia, apto para protocolos notariales y proyectos extensos.',
-    image: thesisPercalinaImg,
-    colorHex: '#14532D',
-    colorName: 'Verde Bosque',
-    colorId: 'green',
+    id: 'mod-02',
+    number: 'Modelo 02',
+    category: 'Rojo Carmesí',
+    title: 'Empastado Rojo Carmesí con Escudo Institucional',
+    description: 'Encuadernación de lujo en tapa dura roja para USMA con escudo universitario troquelado y pan de oro reglamentario.',
+    image: '/images/modelos/tesis.jpg',
+    colorHex: '#DC2626',
+    colorName: 'Rojo Carmesí',
+    colorId: 'red',
+    university: 'USMA · Derecho y Ciencias Políticas',
+  },
+  {
+    id: 'mod-03',
+    number: 'Modelo 03',
+    category: 'Dúo Azul Marino y Azul Rey',
+    title: 'Dúo de Tomos en Azul Marino y Azul Eléctrico',
+    description: 'Muestra comparativa de acabados en azul clásico y azul brillante para Universidad de Panamá con rotulación nítida en portada y lomo.',
+    image: '/images/modelos/tesis7.jpg',
+    colorHex: '#0B2341',
+    colorName: 'Azul Marino',
+    colorId: 'navy',
+    university: 'Universidad de Panamá (UP)',
+  },
+  {
+    id: 'mod-04',
+    number: 'Modelo 04',
+    category: 'Morado en Percalina',
+    title: 'Empastado Púrpura Texturizado en Percalina',
+    description: 'Acabado en tela percalina púrpura de alta resistencia con grabado dorado milimétrico para carreras especializadas de ingeniería.',
+    image: '/images/modelos/tesis2.jpg',
+    colorHex: '#6B21A8',
+    colorName: 'Púrpura / Morado',
+    colorId: 'slate',
+    university: 'Universidad Interamericana (UIP)',
+  },
+  {
+    id: 'mod-05',
+    number: 'Modelo 05',
+    category: 'Amarillo Ocre',
+    title: 'Empastado en Amarillo Ocre Oficial',
+    description: 'Tono representativo para la Facultad de Arquitectura y Diseño con tipografía dorada indeleble y estándares universitarios.',
+    image: '/images/modelos/tesis3.jpg',
+    colorHex: '#D97706',
+    colorName: 'Amarillo Ocre',
+    colorId: 'gold',
+    university: 'Facultad de Arquitectura · UP',
+  },
+  {
+    id: 'mod-06',
+    number: 'Modelo 06',
+    category: 'Azul Noche Notarial',
+    title: 'Serie de Tomos Azul Noche con Escudo Cuadrado',
+    description: 'Producción en serie para Centro Tecnológico de Panamá con sellado térmico y protección plástica para conservación.',
+    image: '/images/modelos/tesis5.jpg',
+    colorHex: '#0A1829',
+    colorName: 'Azul Noche',
+    colorId: 'navy',
+    university: 'Centro Tecnológico de Panamá (CTP)',
+  },
+  {
+    id: 'mod-07',
+    number: 'Modelo 07',
+    category: 'Azul Rey Oficial',
+    title: 'Empastado en Azul Rey Eléctrico con Foliación Oficial',
+    description: 'Presentación frontal impecable con márgenes de encuadernación reglamentarios de 3.5 cm y estampado en oro de 14 pt.',
+    image: '/images/modelos/tesis6.jpg',
+    colorHex: '#0284C7',
+    colorName: 'Azul Royal Eléctrico',
+    colorId: 'cyan',
+    university: 'Facultad de Economía · UP',
   },
 ];
+
+export const DESIGN_SHOWCASES = MODELOS_SHOWCASES;
 
 export const MOCK_ORDERS: Record<string, OrderTrackResult> = {
   'ped-2024-88': {

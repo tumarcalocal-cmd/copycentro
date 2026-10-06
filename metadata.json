@@ -1,6 +1,8 @@
 {
-  "name": "Copy Centro y Empastados",
+  "name": "Porta Diplomas Panamá",
   "description": "Confección artesanal de empastados de tesis, portadiplomas y acabados institucionales en Panamá.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

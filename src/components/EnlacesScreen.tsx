@@ -4,14 +4,17 @@ import {
   GraduationCap, 
   Phone, 
   ChevronRight, 
-  Award 
+  Award,
+  Search,
+  Camera
 } from 'lucide-react';
-import { HERO_IMAGES } from '../data/mockData';
+import { useHeroPhotos } from '../hooks/useHeroPhotos';
 
 interface EnlacesScreenProps {
   onNavigateToSolicitar: () => void;
   onNavigateToServicios: () => void;
   onOpenDiplomas: () => void;
+  onOpenRastreo?: () => void;
   onOpenContacto: () => void;
 }
 
@@ -19,8 +22,28 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
   onNavigateToSolicitar,
   onNavigateToServicios,
   onOpenDiplomas,
+  onOpenRastreo,
   onOpenContacto,
 }) => {
+  const { heroPhotos, saveHeroPhoto } = useHeroPhotos();
+
+  // Modo edición: solo visible en el entorno de desarrollo/edición (ais-dev, localhost o con ?admin=1)
+  const isEditingMode = typeof window !== 'undefined' && (
+    import.meta.env.DEV ||
+    window.location.hostname.includes('localhost') ||
+    window.location.hostname.includes('ais-dev') ||
+    window.location.search.includes('admin=1') ||
+    window.location.search.includes('edit=1')
+  );
+
+  const handleFileChange = (slot: 'acabadosOro' | 'portadiplomas', e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      saveHeroPhoto(slot, file);
+      e.target.value = '';
+    }
+  };
+
   return (
     <div className="flex flex-col items-center w-full px-5 pb-28 pt-2">
       {/* Brand Emblem / Avatar */}
@@ -28,7 +51,7 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
         <div className="w-22 h-22 rounded-full bg-[#0a1829] flex items-center justify-center shadow-lg border-[3px] border-[#BD944D]/80 p-1">
           <div className="w-full h-full rounded-full border border-[#BD944D]/40 flex items-center justify-center bg-[#071322]">
             <span className="font-serif-brand text-2xl font-bold tracking-wider text-[#BD944D]">
-              CC
+              PDP
             </span>
           </div>
         </div>
@@ -37,10 +60,10 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
       {/* Main Brand Titles */}
       <div className="text-center mb-6">
         <h1 className="text-2xl sm:text-[28px] font-extrabold tracking-tight text-[#102338] uppercase">
-          COPY CENTRO
+          PORTA DIPLOMAS
         </h1>
-        <h2 className="text-sm font-semibold tracking-widest text-[#102338] uppercase mt-0.5">
-          <span className="text-[#BD944D] font-bold mr-1">&</span> EMPASTADOS
+        <h2 className="text-base font-bold tracking-widest text-[#102338] uppercase mt-0.5">
+          PANAMÁ
         </h2>
         
         <p className="text-[12px] font-bold tracking-wider text-[#966b1a] uppercase mt-3">
@@ -55,9 +78,12 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
       {/* Two Showcase Cards Side-by-Side */}
       <div className="grid grid-cols-2 gap-3 w-full mb-5">
         {/* Card 1: Acabados en Oro */}
-        <div className="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 shadow-md text-left select-none transition-transform hover:shadow-lg">
+        <div 
+          onClick={onNavigateToServicios}
+          className="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 shadow-md text-left select-none transition-transform hover:shadow-lg cursor-pointer"
+        >
           <img
-            src={HERO_IMAGES.acabadosOro}
+            src={heroPhotos.acabadosOro}
             alt="Tesis con acabados en oro"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
             referrerPolicy="no-referrer"
@@ -68,12 +94,35 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
               Acabados en Oro
             </span>
           </div>
+
+          {/* Botón de cambiar imagen exclusivo para el dueño en modo edición */}
+          {isEditingMode && (
+            <div className="absolute top-2 right-2 z-20">
+              <label
+                onClick={(e) => e.stopPropagation()}
+                className="flex items-center gap-1 bg-black/75 hover:bg-black/95 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md transition-transform active:scale-95 cursor-pointer border border-[#BD944D]/50"
+                title="Cambiar foto de portada (Solo visible para ti)"
+              >
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => handleFileChange('acabadosOro', e)}
+                />
+                <Camera className="w-3 h-3 text-[#edbf74]" />
+                <span>Editar</span>
+              </label>
+            </div>
+          )}
         </div>
 
         {/* Card 2: Portadiplomas Finos */}
-        <div className="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 shadow-md text-left select-none transition-transform hover:shadow-lg">
+        <div 
+          onClick={onOpenDiplomas}
+          className="group relative rounded-2xl overflow-hidden aspect-[4/3] bg-slate-900 shadow-md text-left select-none transition-transform hover:shadow-lg cursor-pointer"
+        >
           <img
-            src={HERO_IMAGES.portadiplomas}
+            src={heroPhotos.portadiplomas}
             alt="Portadiplomas finos institucionales"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
             referrerPolicy="no-referrer"
@@ -84,6 +133,26 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
               Portadiplomas Finos
             </span>
           </div>
+
+          {/* Botón de cambiar imagen exclusivo para el dueño en modo edición */}
+          {isEditingMode && (
+            <div className="absolute top-2 right-2 z-20">
+              <label
+                onClick={(e) => e.stopPropagation()}
+                className="flex items-center gap-1 bg-black/75 hover:bg-black/95 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md transition-transform active:scale-95 cursor-pointer border border-[#BD944D]/50"
+                title="Cambiar foto de portada (Solo visible para ti)"
+              >
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => handleFileChange('portadiplomas', e)}
+                />
+                <Camera className="w-3 h-3 text-[#edbf74]" />
+                <span>Editar</span>
+              </label>
+            </div>
+          )}
         </div>
       </div>
 
@@ -101,14 +170,14 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <span className="text-[15px] font-bold text-white tracking-tight">
-                  Empastados
+                  Cotizar Empastado
                 </span>
                 <span className="bg-[#24354b] text-[#edbf74] text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wider uppercase">
                   TESIS
                 </span>
               </div>
               <p className="text-[11px] text-slate-300 truncate mt-0.5">
-                Solicitud, modelos y seguimiento
+                Calcula tu pedido y envía por WhatsApp
               </p>
             </div>
           </div>
@@ -147,7 +216,36 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
           </div>
         </button>
 
-        {/* Item 3: Contacto */}
+        {/* Item 3: Consulte su pedido (Debajo de Diplomas) */}
+        <button
+          onClick={onOpenRastreo || onNavigateToServicios}
+          className="w-full bg-[#0d1f33] hover:bg-[#122842] text-white p-3.5 sm:p-4 rounded-2xl shadow-md transition-all active:scale-[0.985] flex items-center justify-between text-left cursor-pointer border border-[#BD944D]/20 group"
+        >
+          <div className="flex items-center gap-3.5 min-w-0">
+            <div className="w-10 h-10 rounded-xl bg-[#162e49] flex items-center justify-center shrink-0 border border-[#BD944D]/30 text-[#BD944D]">
+              <Search className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-[15px] font-bold text-white tracking-tight">
+                  Consulte su pedido
+                </span>
+                <span className="bg-[#24354b] text-[#edbf74] text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wider uppercase">
+                  ESTADO
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-300 truncate mt-0.5">
+                Rastreo y estado de producción en taller
+              </p>
+            </div>
+          </div>
+
+          <div className="w-8 h-8 rounded-full bg-[#1b3452] flex items-center justify-center shrink-0 text-slate-300 group-hover:text-white group-hover:bg-[#254366] transition-colors ml-2">
+            <ChevronRight className="w-4 h-4" />
+          </div>
+        </button>
+
+        {/* Item 4: Contacto */}
         <button
           onClick={onOpenContacto}
           className="w-full bg-[#0d1f33] hover:bg-[#122842] text-white p-3.5 sm:p-4 rounded-2xl shadow-md transition-all active:scale-[0.985] flex items-center justify-between text-left cursor-pointer border border-[#BD944D]/20 group"
