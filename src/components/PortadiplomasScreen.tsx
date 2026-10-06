@@ -118,7 +118,7 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = () => {
           {/* Hero Banner */}
           <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white">
             <img 
-              src="/portadiplomas/port1.jpg" 
+              src="/images/portadiplomas/port1.png" 
               alt="Portadiplomas finos en cuero azul" 
               className="w-full h-40 object-cover"
               referrerPolicy="no-referrer"

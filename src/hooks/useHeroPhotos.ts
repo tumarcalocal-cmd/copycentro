@@ -6,7 +6,7 @@ const STORAGE_PREFIX = 'pdp_hero_';
 export function useHeroPhotos() {
   const [heroPhotos, setHeroPhotos] = useState<Record<string, string>>({
     acabadosOro: '/images/modelos/tesis4.jpg',
-    portadiplomas: '/images/portadiplomas/port1.jpg',
+    portadiplomas: '/images/portadiplomas/port1.png',
   });
 
   useEffect(() => {
