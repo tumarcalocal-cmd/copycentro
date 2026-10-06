@@ -10,7 +10,7 @@ interface PortadiplomasScreenProps {
 }
 
 export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = () => {
-  const [subTab, setSubTab] = useState<'cotizar' | 'modelos'>('modelos');
+  const [subTab, setSubTab] = useState<'cotizar' | 'modelos'>('cotizar');
   const [zoomImage, setZoomImage] = useState<{ url: string; title: string } | null>(null);
 
   const [config, setConfig] = useState<DiplomaConfig>({
@@ -157,89 +157,32 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = () => {
               </div>
             </div>
 
-            {/* Tipo de Producto */}
-            <div>
-              <label className="text-slate-700 font-semibold block mb-1">Tipo de Presentación</label>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setConfig(prev => ({ ...prev, tipoProducto: 'Portadiploma Individual' }))}
-                  className={`py-2 px-3 rounded-xl border text-center font-medium transition-all cursor-pointer ${
-                    config.tipoProducto === 'Portadiploma Individual' 
-                      ? 'border-[#BD944D] bg-[#102338] text-white font-bold shadow-xs' 
-                      : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
-                  }`}
-                >
-                  Individual (1 cara)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setConfig(prev => ({ ...prev, tipoProducto: 'Portadiploma Doble / Carpeta' }))}
-                  className={`py-2 px-3 rounded-xl border text-center font-medium transition-all cursor-pointer ${
-                    config.tipoProducto === 'Portadiploma Doble / Carpeta' 
-                      ? 'border-[#BD944D] bg-[#102338] text-white font-bold shadow-xs' 
-                      : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
-                  }`}
-                >
-                  Doble / Carpeta (2 caras)
-                </button>
-              </div>
-            </div>
-
             {/* Material */}
             <div>
               <label className="text-slate-700 font-semibold block mb-1">Material de Cubierta</label>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
-                  onClick={() => setConfig(prev => ({ ...prev, material: 'Cuerina acolchada premium' }))}
+                  onClick={() => setConfig(prev => ({ ...prev, material: 'Modelo Clásico' }))}
                   className={`py-2 px-3 rounded-xl border text-center font-medium transition-all cursor-pointer ${
-                    config.material === 'Cuerina acolchada premium' 
+                    config.material === 'Modelo Clásico' || config.material === 'Cuerina acolchada premium'
                       ? 'border-[#BD944D] bg-[#102338] text-white font-bold shadow-xs' 
                       : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
                   }`}
                 >
-                  Cuerina acolchada
+                  Modelo Clásico
                 </button>
                 <button
                   type="button"
-                  onClick={() => setConfig(prev => ({ ...prev, material: 'Percalina clásica con textura' }))}
+                  onClick={() => setConfig(prev => ({ ...prev, material: 'Modelo Percalina' }))}
                   className={`py-2 px-3 rounded-xl border text-center font-medium transition-all cursor-pointer ${
-                    config.material === 'Percalina clásica con textura' 
+                    config.material === 'Modelo Percalina' || config.material === 'Percalina clásica con textura'
                       ? 'border-[#BD944D] bg-[#102338] text-white font-bold shadow-xs' 
                       : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
                   }`}
                 >
-                  Percalina clásica
+                  Modelo Percalina
                 </button>
-              </div>
-            </div>
-
-            {/* Color / Acabado */}
-            <div>
-              <label className="text-slate-700 font-semibold block mb-1">Color de Cubierta</label>
-              <div className="grid grid-cols-3 gap-1.5">
-                {[
-                  'Azul Marino Institucional',
-                  'Vino / Borgoña',
-                  'Negro Ejecutivo',
-                  'Verde Esmeralda',
-                  'Rojo Carmesí',
-                  'Azul Royal'
-                ].map((color) => (
-                  <button
-                    key={color}
-                    type="button"
-                    onClick={() => setConfig(prev => ({ ...prev, diseno: color }))}
-                    className={`py-2 px-2 text-[11px] rounded-xl border text-center truncate cursor-pointer transition-colors ${
-                      config.diseno === color 
-                        ? 'border-[#BD944D] bg-[#102338] text-white font-bold shadow-xs' 
-                        : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
-                    }`}
-                  >
-                    {color}
-                  </button>
-                ))}
               </div>
             </div>
 

@@ -74,7 +74,6 @@ export const CopiesPagesStep: React.FC<CopiesPagesStepProps> = ({
             {modalidad === 'solo_empastado' ? 'Opcional si es Solo Empastado' : 'Configuración editorial'}
           </span>
         </div>
-
         <p className="text-[11px] text-slate-600 font-medium mb-2">
           Soporte y gramaje:
         </p>
@@ -104,7 +103,6 @@ export const CopiesPagesStep: React.FC<CopiesPagesStepProps> = ({
             Imprimir en papel algodon de tesis
           </button>
         </div>
-
         <div className="flex items-center justify-between pt-1 border-t border-slate-200/70">
           <div>
             <span className="text-xs font-bold text-slate-900 block">
