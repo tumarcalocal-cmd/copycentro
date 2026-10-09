@@ -71,7 +71,11 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleGoToDiplomas = () => {
+  const [diplomasSubTab, setDiplomasSubTab] = useState<'cotizar' | 'modelos'>('cotizar');
+
+  const handleGoToDiplomas = (subTab?: unknown) => {
+    const targetSubTab = subTab === 'modelos' ? 'modelos' : 'cotizar';
+    setDiplomasSubTab(targetSubTab);
     setActiveTab('diplomas');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -140,7 +144,7 @@ export default function App() {
             <EnlacesScreen
               onNavigateToSolicitar={() => handleGoToSolicitar({ modalidad: 'solo_empastado' })}
               onNavigateToServicios={() => handleGoToServicios('disenos')}
-              onOpenDiplomas={handleGoToDiplomas}
+              onOpenDiplomas={() => handleGoToDiplomas('cotizar')}
               onOpenRastreo={handleGoToRastreo}
               onOpenContacto={handleGoToContacto}
             />
@@ -171,6 +175,8 @@ export default function App() {
           {activeTab === 'diplomas' && (
             <PortadiplomasScreen
               onNavigateToInicio={handleGoToInicio}
+              initialSubTab={diplomasSubTab}
+              onSubTabChange={setDiplomasSubTab}
             />
           )}
 

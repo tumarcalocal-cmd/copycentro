@@ -57,6 +57,14 @@ export const DiplomaSummaryCard: React.FC<DiplomaSummaryCardProps> = ({
           {config.personalizacion}
         </span>
       </div>
+      {config.archivo && (
+        <div className="flex justify-between items-center text-slate-300">
+          <span>Foto de referencia:</span>
+          <span className="font-semibold text-emerald-400 truncate max-w-[200px] text-right">
+            {config.archivo}
+          </span>
+        </div>
+      )}
 
       {/* Action button with feedback */}
       <button
