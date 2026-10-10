@@ -5,6 +5,7 @@ import { DiplomaConfig } from '../types';
 import { DiplomaSummaryCard } from './diplomas/DiplomaSummaryCard';
 import { PortadiplomasModelosView } from './diplomas/PortadiplomasModelosView';
 import { optimizeUploadedImage } from '../utils/imageOptimizer';
+import { useEditorMode } from '../hooks/useEditorMode';
 
 interface PortadiplomasScreenProps {
   onNavigateToInicio: () => void;
@@ -207,8 +208,8 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
     if (cameraInputRef.current) cameraInputRef.current.value = '';
   };
 
-  // Modo edición: siempre habilitado para que el dueño pueda personalizar las fotos de los modelos
-  const isEditingMode = true;
+  // Modo edición: solo habilitado en el editor/desarrollo para proteger las fotos del público
+  const isEditingMode = useEditorMode();
 
   const handleSendWhatsApp = () => {
     let message = `Hola, quisiera solicitar información sobre este trabajo.\n\n` +
@@ -325,24 +326,28 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
               referrerPolicy="no-referrer"
             />
 
-            {/* Botón para subir foto del banner */}
-            <button
-              type="button"
-              onClick={() => heroFileInputRef.current?.click()}
-              className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5 bg-black/85 hover:bg-black text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg border border-[#BD944D] active:scale-95 cursor-pointer backdrop-blur-xs transition-transform"
-              title="Subir foto del portadiploma"
-            >
-              <Upload className="w-3.5 h-3.5 text-[#edbf74]" />
-              <span>Subir foto</span>
-            </button>
+            {/* Botón para subir foto del banner (SOLO visible en el editor) */}
+            {isEditingMode && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => heroFileInputRef.current?.click()}
+                  className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5 bg-black/85 hover:bg-black text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg border border-[#BD944D] active:scale-95 cursor-pointer backdrop-blur-xs transition-transform"
+                  title="Subir foto del portadiploma (Solo editor)"
+                >
+                  <Upload className="w-3.5 h-3.5 text-[#edbf74]" />
+                  <span>Subir foto</span>
+                </button>
 
-            <input
-              ref={heroFileInputRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleHeroPhotoChange}
-            />
+                <input
+                  ref={heroFileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleHeroPhotoChange}
+                />
+              </>
+            )}
 
             <div className="p-3.5 bg-white">
               <span className="text-[10px] uppercase font-bold tracking-wider text-[#BD944D] block">

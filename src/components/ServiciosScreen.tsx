@@ -3,6 +3,7 @@ import { X, UploadCloud, CheckCircle2 } from 'lucide-react';
 import { MODELOS_SHOWCASES } from '../data/mockData';
 import { ModeloCard } from './servicios/ModeloCard';
 import { useModelosPhotos } from '../hooks/useModelosPhotos';
+import { useEditorMode } from '../hooks/useEditorMode';
 import { EmpastadoConfig, DesignShowcase } from '../types';
 
 interface ServiciosScreenProps {
@@ -23,8 +24,8 @@ export const ServiciosScreen: React.FC<ServiciosScreenProps> = ({
 
   const { getPhotoForModel, handleFilesUpload, savePhoto } = useModelosPhotos();
 
-  // Modo edición: siempre habilitado para que el dueño pueda personalizar fotos reales
-  const isEditingMode = true;
+  // Modo edición: solo habilitado en el editor/desarrollo para proteger las fotos del público
+  const isEditingMode = useEditorMode();
 
   const handleSubTabClick = (tab: 'solicitar' | 'disenos') => {
     setSubTab(tab);
