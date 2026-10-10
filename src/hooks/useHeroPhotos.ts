@@ -5,7 +5,7 @@ const STORAGE_PREFIX = 'pdp_hero_';
 
 export function useHeroPhotos() {
   const [heroPhotos, setHeroPhotos] = useState<Record<string, string>>({
-    acabadosOro: '/images/modelos/tesis_azul_oro.jpg',
+    acabadosOro: '/images/modelos/tesis4.jpg',
     portadiplomas: '/images/portadiplomas/port1.png',
   });
 
@@ -14,10 +14,15 @@ export function useHeroPhotos() {
       const savedAcabados = localStorage.getItem(`${STORAGE_PREFIX}acabadosOro`);
       const savedPorta = localStorage.getItem(`${STORAGE_PREFIX}portadiplomas`);
       
-      // Si el valor guardado es el default anterior o está vacío, usar la nueva imagen
-      const finalAcabados = (savedAcabados && !savedAcabados.includes('tesis4.jpg')) 
+      // Si el valor guardado es de IA o está corrupto, usar la foto original de tesis4.jpg
+      const finalAcabados = (savedAcabados && !savedAcabados.includes('tesis_azul_oro') && !savedAcabados.includes('1791566493131')) 
         ? savedAcabados 
-        : '/images/modelos/tesis_azul_oro.jpg';
+        : '/images/modelos/tesis4.jpg';
+
+      // Si había guardada una imagen de IA, limpiarla del localStorage
+      if (savedAcabados && (savedAcabados.includes('tesis_azul_oro') || savedAcabados.includes('1791566493131'))) {
+        localStorage.removeItem(`${STORAGE_PREFIX}acabadosOro`);
+      }
 
       setHeroPhotos(prev => ({
         acabadosOro: finalAcabados,

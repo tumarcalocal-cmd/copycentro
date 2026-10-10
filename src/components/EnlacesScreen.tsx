@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { 
   FileText, 
   GraduationCap, 
@@ -6,8 +6,7 @@ import {
   ChevronRight, 
   Award,
   Search,
-  Camera,
-  CheckCircle2
+  Camera
 } from 'lucide-react';
 import { useHeroPhotos } from '../hooks/useHeroPhotos';
 
@@ -27,7 +26,6 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
   onOpenContacto,
 }) => {
   const { heroPhotos, saveHeroPhoto } = useHeroPhotos();
-  const [toastMsg, setToastMsg] = useState<string | null>(null);
 
   const fileInputOroRef = useRef<HTMLInputElement>(null);
   const fileInputPortaRef = useRef<HTMLInputElement>(null);
@@ -36,23 +34,13 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
     const file = e.target.files?.[0];
     if (file) {
       saveHeroPhoto(slot, file);
-      setToastMsg(`✅ Foto de ${slot === 'acabadosOro' ? 'Acabados en Oro' : 'Portadiplomas'} actualizada con éxito.`);
-      setTimeout(() => setToastMsg(null), 4000);
       e.target.value = '';
     }
   };
 
   return (
     <div className="flex flex-col items-center w-full px-5 pb-28 pt-2">
-      {/* Toast de confirmación al subir foto */}
-      {toastMsg && (
-        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-emerald-950 text-white px-4 py-2.5 rounded-full shadow-2xl border border-emerald-500/80 text-xs font-bold flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-          <span>{toastMsg}</span>
-        </div>
-      )}
-
-      {/* Hidden file inputs con refs directos para máxima compatibilidad móvil */}
+      {/* Hidden file inputs para permitir cambiar foto en cualquier momento */}
       <input
         ref={fileInputOroRef}
         type="file"
@@ -97,7 +85,7 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
         </p>
       </div>
 
-      {/* Two Showcase Cards Side-by-Side */}
+      {/* Two Showcase Cards Side-by-Side con botón flotante restaurado */}
       <div className="grid grid-cols-2 gap-3 w-full mb-5">
         {/* Card 1: Acabados en Oro */}
         <div 
@@ -119,7 +107,7 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
               e.stopPropagation();
               fileInputOroRef.current?.click();
             }}
-            className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-black/75 hover:bg-black text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md border border-[#BD944D]/60 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-black/80 hover:bg-black text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md border border-[#BD944D]/60 active:scale-95 cursor-pointer backdrop-blur-xs"
             title="Cambiar foto"
           >
             <Camera className="w-3 h-3 text-[#edbf74]" />
@@ -147,7 +135,7 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
               e.stopPropagation();
               fileInputPortaRef.current?.click();
             }}
-            className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-black/75 hover:bg-black text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md border border-[#BD944D]/60 active:scale-95 cursor-pointer backdrop-blur-xs"
+            className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-black/80 hover:bg-black text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md border border-[#BD944D]/60 active:scale-95 cursor-pointer backdrop-blur-xs"
             title="Cambiar foto"
           >
             <Camera className="w-3 h-3 text-[#edbf74]" />
