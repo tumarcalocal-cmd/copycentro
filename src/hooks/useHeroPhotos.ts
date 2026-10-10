@@ -11,23 +11,20 @@ export function useHeroPhotos() {
 
   useEffect(() => {
     try {
-      const savedAcabados = localStorage.getItem(`${STORAGE_PREFIX}acabadosOro`);
-      const savedPorta = localStorage.getItem(`${STORAGE_PREFIX}portadiplomas`);
-      
-      // Si el valor guardado es de IA o está corrupto, usar la foto original de tesis4.jpg
-      const finalAcabados = (savedAcabados && !savedAcabados.includes('tesis_azul_oro') && !savedAcabados.includes('1791566493131')) 
-        ? savedAcabados 
-        : '/images/modelos/tesis4.jpg';
+      // Limpiar cualquier residuo de imágenes de IA
+      localStorage.removeItem(`${STORAGE_PREFIX}acabadosOro`);
+      localStorage.removeItem(`${STORAGE_PREFIX}portadiplomas`);
+      localStorage.removeItem('pdp_hero_acabadosOro');
+      localStorage.removeItem('pdp_hero_portadiplomas');
 
-      // Si había guardada una imagen de IA, limpiarla del localStorage
-      if (savedAcabados && (savedAcabados.includes('tesis_azul_oro') || savedAcabados.includes('1791566493131'))) {
-        localStorage.removeItem(`${STORAGE_PREFIX}acabadosOro`);
-      }
+      // Cargar foto subida por el usuario si existe, o usar la foto original de taller
+      const customOro = localStorage.getItem('pdp_hero_custom_acabadosOro') || localStorage.getItem('pdp_modelo_photo_mod-01');
+      const customPorta = localStorage.getItem('pdp_hero_custom_portadiplomas') || localStorage.getItem('pdp_portadiploma_photo_port-01');
 
-      setHeroPhotos(prev => ({
-        acabadosOro: finalAcabados,
-        portadiplomas: savedPorta || prev.portadiplomas,
-      }));
+      setHeroPhotos({
+        acabadosOro: customOro || '/images/modelos/tesis4.jpg',
+        portadiplomas: customPorta || '/images/portadiplomas/port1.png',
+      });
     } catch {
       // localStorage fallback
     }
@@ -42,15 +39,20 @@ export function useHeroPhotos() {
       // fallback
     }
 
-    // 2. Optimización y persistencia en localStorage para que no se pierda al recargar
+    // 2. Optimización y guardado persistente
     try {
       const optimized = await optimizeUploadedImage(file);
       if (optimized) {
         setHeroPhotos(prev => ({ ...prev, [slot]: optimized }));
-        localStorage.setItem(`${STORAGE_PREFIX}${slot}`, optimized);
+        localStorage.setItem(`pdp_hero_custom_${slot}`, optimized);
+        if (slot === 'acabadosOro') {
+          localStorage.setItem('pdp_modelo_photo_mod-01', optimized);
+        } else {
+          localStorage.setItem('pdp_portadiploma_photo_port-01', optimized);
+        }
       }
     } catch (err) {
-      console.warn('Almacenamiento local lleno o no disponible:', err);
+      console.warn('Almacenamiento local:', err);
     }
   };
 

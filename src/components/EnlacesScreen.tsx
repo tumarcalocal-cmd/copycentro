@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   FileText, 
   GraduationCap, 
@@ -6,7 +6,9 @@ import {
   ChevronRight, 
   Award,
   Search,
-  Camera
+  Upload,
+  Camera,
+  CheckCircle2
 } from 'lucide-react';
 import { useHeroPhotos } from '../hooks/useHeroPhotos';
 
@@ -26,6 +28,7 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
   onOpenContacto,
 }) => {
   const { heroPhotos, saveHeroPhoto } = useHeroPhotos();
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
 
   const fileInputOroRef = useRef<HTMLInputElement>(null);
   const fileInputPortaRef = useRef<HTMLInputElement>(null);
@@ -34,27 +37,23 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
     const file = e.target.files?.[0];
     if (file) {
       saveHeroPhoto(slot, file);
+      setToastMsg('¡Foto subida con éxito!');
+      setTimeout(() => setToastMsg(null), 3500);
       e.target.value = '';
     }
   };
 
   return (
     <div className="flex flex-col items-center w-full px-5 pb-28 pt-2">
-      {/* Hidden file inputs para permitir cambiar foto en cualquier momento */}
-      <input
-        ref={fileInputOroRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={(e) => handleFileChange('acabadosOro', e)}
-      />
-      <input
-        ref={fileInputPortaRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={(e) => handleFileChange('portadiplomas', e)}
-      />
+      {/* Aviso de confirmación de subida */}
+      {toastMsg && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-[#0a1829] text-[#edbf74] px-4 py-2 rounded-full border border-[#BD944D] shadow-xl text-xs font-bold flex items-center gap-2 animate-bounce">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span>{toastMsg}</span>
+        </div>
+      )}
+
+
 
       {/* Brand Emblem / Avatar */}
       <div className="relative mb-3 flex items-center justify-center">
@@ -85,7 +84,7 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
         </p>
       </div>
 
-      {/* Two Showcase Cards Side-by-Side con botón flotante restaurado */}
+      {/* Two Showcase Cards Side-by-Side con botón directo de Subir foto */}
       <div className="grid grid-cols-2 gap-3 w-full mb-5">
         {/* Card 1: Acabados en Oro */}
         <div 
@@ -99,20 +98,34 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
             referrerPolicy="no-referrer"
           />
 
-          {/* Botón flotante para cambiar foto */}
-          <button
-            type="button"
+          {/* Botón directo para subir foto solicitado */}
+          <label
+            htmlFor="subir-foto-acabados-oro"
             onClick={(e) => {
-              e.preventDefault();
               e.stopPropagation();
-              fileInputOroRef.current?.click();
             }}
-            className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-black/80 hover:bg-black text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md border border-[#BD944D]/60 active:scale-95 cursor-pointer backdrop-blur-xs"
-            title="Cambiar foto"
+            className="absolute top-2 right-2 z-30 flex items-center gap-1.5 bg-[#0a1829]/95 hover:bg-[#071322] active:scale-95 text-white hover:text-[#edbf74] text-[11px] font-bold px-2.5 py-1.5 rounded-full shadow-xl border border-[#BD944D] cursor-pointer transition-all backdrop-blur-xs select-none"
+            title="Subir foto para esta imagen"
           >
-            <Camera className="w-3 h-3 text-[#edbf74]" />
-            <span>Cambiar foto</span>
-          </button>
+            <Camera className="w-3.5 h-3.5 text-[#edbf74] shrink-0" />
+            <span>Subir foto</span>
+          </label>
+          <input
+            id="subir-foto-acabados-oro"
+            ref={fileInputOroRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onClick={(e) => e.stopPropagation()}
+            onChange={(e) => handleFileChange('acabadosOro', e)}
+          />
+
+          {/* Etiqueta de la tarjeta */}
+          <div className="absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none">
+            <span className="text-white text-[11px] font-semibold block truncate drop-shadow-sm">
+              Acabados en Oro
+            </span>
+          </div>
         </div>
 
         {/* Card 2: Portadiplomas Finos */}
@@ -127,20 +140,34 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
             referrerPolicy="no-referrer"
           />
 
-          {/* Botón flotante para cambiar foto */}
-          <button
-            type="button"
+          {/* Botón directo para subir foto */}
+          <label
+            htmlFor="subir-foto-portadiplomas"
             onClick={(e) => {
-              e.preventDefault();
               e.stopPropagation();
-              fileInputPortaRef.current?.click();
             }}
-            className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-black/80 hover:bg-black text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md border border-[#BD944D]/60 active:scale-95 cursor-pointer backdrop-blur-xs"
-            title="Cambiar foto"
+            className="absolute top-2 right-2 z-30 flex items-center gap-1.5 bg-[#0a1829]/95 hover:bg-[#071322] active:scale-95 text-white hover:text-[#edbf74] text-[11px] font-bold px-2.5 py-1.5 rounded-full shadow-xl border border-[#BD944D] cursor-pointer transition-all backdrop-blur-xs select-none"
+            title="Subir foto para esta imagen"
           >
-            <Camera className="w-3 h-3 text-[#edbf74]" />
-            <span>Cambiar foto</span>
-          </button>
+            <Camera className="w-3.5 h-3.5 text-[#edbf74] shrink-0" />
+            <span>Subir foto</span>
+          </label>
+          <input
+            id="subir-foto-portadiplomas"
+            ref={fileInputPortaRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onClick={(e) => e.stopPropagation()}
+            onChange={(e) => handleFileChange('portadiplomas', e)}
+          />
+
+          {/* Etiqueta de la tarjeta */}
+          <div className="absolute inset-x-0 bottom-0 p-2 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none">
+            <span className="text-white text-[11px] font-semibold block truncate drop-shadow-sm">
+              Portadiplomas
+            </span>
+          </div>
         </div>
       </div>
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Award, ChevronDown, Minus, Plus, X, Check, Image as ImageIcon, Camera, Trash2, RefreshCw } from 'lucide-react';
+import { Award, ChevronDown, Minus, Plus, X, Check, Image as ImageIcon, Camera, Trash2, RefreshCw, Upload } from 'lucide-react';
 import { WORKSHOP_INFO } from '../data/mockData';
 import { DiplomaConfig } from '../types';
 import { DiplomaSummaryCard } from './diplomas/DiplomaSummaryCard';
 import { PortadiplomasModelosView } from './diplomas/PortadiplomasModelosView';
+import { optimizeUploadedImage } from '../utils/imageOptimizer';
 
 interface PortadiplomasScreenProps {
   onNavigateToInicio: () => void;
@@ -48,6 +49,32 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+
+  // Foto personalizada del banner de portadiplomas
+  const [heroBannerPhoto, setHeroBannerPhoto] = useState<string>(() => {
+    if (typeof window === 'undefined') return '/images/portadiplomas/port1.png';
+    return localStorage.getItem('pdp_portadiploma_hero_banner') || localStorage.getItem('pdp_portadiploma_photo_port-01') || '/images/portadiplomas/port1.png';
+  });
+  const heroFileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleHeroPhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const immediateUrl = URL.createObjectURL(file);
+      setHeroBannerPhoto(immediateUrl);
+      try {
+        const optimized = await optimizeUploadedImage(file);
+        if (optimized) {
+          setHeroBannerPhoto(optimized);
+          localStorage.setItem('pdp_portadiploma_hero_banner', optimized);
+          localStorage.setItem('pdp_portadiploma_photo_port-01', optimized);
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+      e.target.value = '';
+    }
+  };
 
   // Cámara en vivo con visualizador real
   const [isCameraActive, setIsCameraActive] = useState(false);
@@ -289,14 +316,34 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
         </div>
       ) : (
         <div className="space-y-4">
-          {/* Hero Banner */}
-          <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white">
+          {/* Hero Banner con botón Subir foto */}
+          <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white">
             <img 
-              src="/images/portadiplomas/port1.png" 
+              src={heroBannerPhoto} 
               alt="Portadiplomas finos en cuero azul" 
               className="w-full h-40 object-cover"
               referrerPolicy="no-referrer"
             />
+
+            {/* Botón para subir foto del banner */}
+            <button
+              type="button"
+              onClick={() => heroFileInputRef.current?.click()}
+              className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5 bg-black/85 hover:bg-black text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg border border-[#BD944D] active:scale-95 cursor-pointer backdrop-blur-xs transition-transform"
+              title="Subir foto del portadiploma"
+            >
+              <Upload className="w-3.5 h-3.5 text-[#edbf74]" />
+              <span>Subir foto</span>
+            </button>
+
+            <input
+              ref={heroFileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleHeroPhotoChange}
+            />
+
             <div className="p-3.5 bg-white">
               <span className="text-[10px] uppercase font-bold tracking-wider text-[#BD944D] block">
                 Acabado Colegial y Universitario
