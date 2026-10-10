@@ -30,7 +30,7 @@ export const DiplomaSummaryCard: React.FC<DiplomaSummaryCardProps> = ({
       </div>
 
       <div className="flex justify-between items-center text-slate-300">
-        <span>Producto:</span>
+        <span>Características:</span>
         <span className="font-semibold text-white">{config.tipoProducto}</span>
       </div>
       <div className="flex justify-between items-center text-slate-300">

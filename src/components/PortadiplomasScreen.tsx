@@ -24,6 +24,12 @@ const GRABADO_OPTIONS = [
   'Personalización completa con nombre del graduando',
 ];
 
+const CARACTERISTICAS_OPCIONES = [
+  'Solo Portadiploma',
+  'Portadiploma y diploma',
+  'Portadiploma, diploma y foto grupal',
+];
+
 const validSubTab = (val?: unknown): 'cotizar' | 'modelos' => {
   return val === 'modelos' ? 'modelos' : 'cotizar';
 };
@@ -52,7 +58,8 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
   const [config, setConfig] = useState<DiplomaConfig>({
     nivel: 'Universitario (Licenciatura / Maestría)',
     material: 'Modelo Clásico',
-    tipoProducto: 'Portadiploma Individual',
+    tipoProducto: 'Solo Portadiploma',
+    caracteristicasEspeciales: 'Solo Portadiploma',
     cantidad: 1,
     personalizacion: 'Escudo troquelado en relieve dorado',
     diseno: 'Azul Marino Institucional',
@@ -173,14 +180,8 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
     if (cameraInputRef.current) cameraInputRef.current.value = '';
   };
 
-  // Modo edición: solo visible en el entorno de desarrollo/edición (ais-dev, localhost o con ?admin=1)
-  const isEditingMode = typeof window !== 'undefined' && (
-    import.meta.env.DEV ||
-    window.location.hostname.includes('localhost') ||
-    window.location.hostname.includes('ais-dev') ||
-    window.location.search.includes('admin=1') ||
-    window.location.search.includes('edit=1')
-  );
+  // Modo edición: siempre habilitado para que el dueño pueda personalizar las fotos de los modelos
+  const isEditingMode = true;
 
   const handleSendWhatsApp = () => {
     let message = `Hola, quisiera solicitar información sobre este trabajo.\n\n` +
@@ -605,7 +606,7 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
               )}
             </div>
 
-            {/* TARJETA 5: Notas especiales (Opcional) */}
+            {/* TARJETA 5: Características Especiales */}
             <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden transition-all">
               <button
                 type="button"
@@ -621,12 +622,12 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
                   </div>
                   <div className="min-w-0">
                     <span className="text-xs sm:text-[13px] font-bold text-slate-900 block tracking-tight">
-                      Notas especiales <span className="text-slate-400 font-normal text-[11px]">(Opcional)</span>
+                      Características Especiales
                     </span>
                     <div className="flex items-center gap-1.5 mt-0.5 min-w-0">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#BD944D] shrink-0" />
                       <span className="text-[11px] font-semibold text-[#875d14] truncate">
-                        {config.observaciones?.trim() ? config.observaciones.trim() : 'Sin notas adicionales'}
+                        {config.tipoProducto}
                       </span>
                     </div>
                   </div>
@@ -641,17 +642,45 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
 
               {activeCard === 5 && (
                 <div className="p-3.5 sm:p-4 pt-1 border-t border-slate-100 bg-slate-50/40 animate-in fade-in">
-                  <div className="pt-2">
+                  <div className="grid grid-cols-1 gap-2 pt-2">
+                    {CARACTERISTICAS_OPCIONES.map((item) => {
+                      const isSelected = config.tipoProducto === item;
+                      return (
+                        <button
+                          key={item}
+                          type="button"
+                          onClick={() => {
+                            setConfig(prev => ({ 
+                              ...prev, 
+                              tipoProducto: item,
+                              caracteristicasEspeciales: item 
+                            }));
+                            setActiveCard(6);
+                          }}
+                          className={`p-3 rounded-xl border text-left text-xs transition-all flex items-center justify-between cursor-pointer ${
+                            isSelected
+                              ? 'border-[#BD944D] bg-[#102338] text-white font-semibold shadow-xs'
+                              : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50/80'
+                          }`}
+                        >
+                          <span className="truncate pr-2">{item}</span>
+                          {isSelected && <Check className="w-4 h-4 text-[#edbf74] shrink-0" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-200/70 mt-3">
+                    <label className="text-[11px] font-semibold text-slate-700 block mb-1">
+                      Nota o especificación adicional <span className="text-slate-400 font-normal">(Opcional)</span>
+                    </label>
                     <input 
                       type="text" 
                       value={config.observaciones || ''}
                       onChange={(e) => setConfig(prev => ({ ...prev, observaciones: e.target.value }))}
                       placeholder="Ej. Promoción 2026, medidas especiales, fecha límite..."
-                      className="w-full p-3 bg-white border border-slate-300 rounded-xl text-xs font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#BD944D]"
+                      className="w-full p-2.5 bg-white border border-slate-300 rounded-xl text-xs font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#BD944D]"
                     />
-                    <p className="text-[10px] text-slate-400 mt-1.5">
-                      Indica cualquier requerimiento institucional específico o fecha de entrega.
-                    </p>
                   </div>
                 </div>
               )}

@@ -23,14 +23,8 @@ export const ServiciosScreen: React.FC<ServiciosScreenProps> = ({
 
   const { getPhotoForModel, handleFilesUpload, savePhoto } = useModelosPhotos();
 
-  // Modo edición: solo visible en el entorno de desarrollo/edición (ais-dev, localhost o con ?admin=1)
-  const isEditingMode = typeof window !== 'undefined' && (
-    import.meta.env.DEV ||
-    window.location.hostname.includes('localhost') ||
-    window.location.hostname.includes('ais-dev') ||
-    window.location.search.includes('admin=1') ||
-    window.location.search.includes('edit=1')
-  );
+  // Modo edición: siempre habilitado para que el dueño pueda personalizar fotos reales
+  const isEditingMode = true;
 
   const handleSubTabClick = (tab: 'solicitar' | 'disenos') => {
     setSubTab(tab);

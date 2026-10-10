@@ -96,17 +96,6 @@ export const ModeloCard: React.FC<ModeloCardProps> = ({
           )}
         </div>
 
-        {/* Clean and Simple Footer */}
-        <div className="p-2.5 bg-white flex items-center justify-between">
-          <span className="text-xs font-bold text-slate-900 block truncate">
-            {modelo.category}
-          </span>
-          {modelo.university && (
-            <span className="text-[11px] text-slate-500 block truncate">
-              {modelo.university}
-            </span>
-          )}
-        </div>
       </div>
     );
   }
@@ -179,17 +168,6 @@ export const ModeloCard: React.FC<ModeloCardProps> = ({
         )}
       </div>
 
-      {/* Compact Info Footer */}
-      <div className="p-2.5 bg-white flex flex-col justify-between flex-1">
-        <span className="text-[11px] font-bold text-slate-900 block truncate leading-tight">
-          {modelo.category}
-        </span>
-        {modelo.university && (
-          <span className="text-[10px] text-slate-500 block truncate mt-0.5">
-            {modelo.university}
-          </span>
-        )}
-      </div>
     </div>
   );
 };

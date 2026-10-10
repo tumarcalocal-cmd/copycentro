@@ -38,6 +38,7 @@ export interface DiplomaConfig {
   nivel: string;
   material: string;
   tipoProducto: string;
+  caracteristicasEspeciales?: string;
   cantidad: number;
   personalizacion: string;
   diseno: string;

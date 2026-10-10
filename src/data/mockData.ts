@@ -3,7 +3,7 @@ import { CoverColor, DesignShowcase, OrderTrackResult } from '../types';
 
 
 export const HERO_IMAGES = {
-  acabadosOro: '/modelos/tesis4.jpg',
+  acabadosOro: '/images/modelos/tesis_azul_oro.jpg',
   portadiplomas: '/modelos/tesis6.jpg',
 };
 

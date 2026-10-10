@@ -65,7 +65,7 @@ export const formatOrderInquiryMessage = (
 export const formatDiplomaMessage = (config: DiplomaConfig): string => {
   let message = `Hola Portadiplomas Panamá, deseo cotizar y solicitar el siguiente trabajo de portadiplomas:\n\n` +
     `*DETALLES DE LA SOLICITUD:*\n` +
-    `• Producto: ${config.tipoProducto}\n` +
+    `• Características especiales: ${config.tipoProducto}\n` +
     `• Nivel educativo: ${config.nivel}\n` +
     `• Material de tapa: ${config.material}\n` +
     `• Cantidad: ${config.cantidad} ${config.cantidad === 1 ? 'unidad' : 'unidades'}\n` +

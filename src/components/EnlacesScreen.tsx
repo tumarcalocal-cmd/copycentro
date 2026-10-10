@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   FileText, 
   GraduationCap, 
@@ -6,7 +6,8 @@ import {
   ChevronRight, 
   Award,
   Search,
-  Camera
+  Camera,
+  CheckCircle2
 } from 'lucide-react';
 import { useHeroPhotos } from '../hooks/useHeroPhotos';
 
@@ -26,26 +27,47 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
   onOpenContacto,
 }) => {
   const { heroPhotos, saveHeroPhoto } = useHeroPhotos();
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
 
-  // Modo edición: solo visible en el entorno de desarrollo/edición (ais-dev, localhost o con ?admin=1)
-  const isEditingMode = typeof window !== 'undefined' && (
-    import.meta.env.DEV ||
-    window.location.hostname.includes('localhost') ||
-    window.location.hostname.includes('ais-dev') ||
-    window.location.search.includes('admin=1') ||
-    window.location.search.includes('edit=1')
-  );
+  const fileInputOroRef = useRef<HTMLInputElement>(null);
+  const fileInputPortaRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (slot: 'acabadosOro' | 'portadiplomas', e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       saveHeroPhoto(slot, file);
+      setToastMsg(`✅ Foto de ${slot === 'acabadosOro' ? 'Acabados en Oro' : 'Portadiplomas'} actualizada con éxito.`);
+      setTimeout(() => setToastMsg(null), 4000);
       e.target.value = '';
     }
   };
 
   return (
     <div className="flex flex-col items-center w-full px-5 pb-28 pt-2">
+      {/* Toast de confirmación al subir foto */}
+      {toastMsg && (
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-emerald-950 text-white px-4 py-2.5 rounded-full shadow-2xl border border-emerald-500/80 text-xs font-bold flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span>{toastMsg}</span>
+        </div>
+      )}
+
+      {/* Hidden file inputs con refs directos para máxima compatibilidad móvil */}
+      <input
+        ref={fileInputOroRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => handleFileChange('acabadosOro', e)}
+      />
+      <input
+        ref={fileInputPortaRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => handleFileChange('portadiplomas', e)}
+      />
+
       {/* Brand Emblem / Avatar */}
       <div className="relative mb-3 flex items-center justify-center">
         <div className="w-22 h-22 rounded-full bg-[#0a1829] flex items-center justify-center shadow-lg border-[3px] border-[#BD944D]/80 p-1">
@@ -58,7 +80,7 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
       </div>
 
       {/* Main Brand Titles */}
-      <div className="text-center mb-6">
+      <div className="text-center mb-5">
         <h1 className="text-2xl sm:text-[28px] font-extrabold tracking-tight text-[#102338] uppercase">
           PORTA DIPLOMAS
         </h1>
@@ -88,32 +110,21 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent transition-opacity group-hover:opacity-90" />
-          <div className="absolute bottom-2.5 left-3 right-2">
-            <span className="text-white text-xs sm:text-[13px] font-semibold leading-tight drop-shadow-sm block">
-              Acabados en Oro
-            </span>
-          </div>
 
-          {/* Botón de cambiar imagen exclusivo para el dueño en modo edición */}
-          {isEditingMode && (
-            <div className="absolute top-2 right-2 z-20">
-              <label
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1 bg-black/75 hover:bg-black/95 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md transition-transform active:scale-95 cursor-pointer border border-[#BD944D]/50"
-                title="Cambiar foto de portada (Solo visible para ti)"
-              >
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => handleFileChange('acabadosOro', e)}
-                />
-                <Camera className="w-3 h-3 text-[#edbf74]" />
-                <span>Editar</span>
-              </label>
-            </div>
-          )}
+          {/* Botón flotante para cambiar foto */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              fileInputOroRef.current?.click();
+            }}
+            className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-black/75 hover:bg-black text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md border border-[#BD944D]/60 active:scale-95 cursor-pointer backdrop-blur-xs"
+            title="Cambiar foto"
+          >
+            <Camera className="w-3 h-3 text-[#edbf74]" />
+            <span>Cambiar foto</span>
+          </button>
         </div>
 
         {/* Card 2: Portadiplomas Finos */}
@@ -127,32 +138,21 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent transition-opacity group-hover:opacity-90" />
-          <div className="absolute bottom-2.5 left-3 right-2">
-            <span className="text-white text-xs sm:text-[13px] font-semibold leading-tight drop-shadow-sm block">
-              Portadiplomas Finos
-            </span>
-          </div>
 
-          {/* Botón de cambiar imagen exclusivo para el dueño en modo edición */}
-          {isEditingMode && (
-            <div className="absolute top-2 right-2 z-20">
-              <label
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1 bg-black/75 hover:bg-black/95 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md transition-transform active:scale-95 cursor-pointer border border-[#BD944D]/50"
-                title="Cambiar foto de portada (Solo visible para ti)"
-              >
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => handleFileChange('portadiplomas', e)}
-                />
-                <Camera className="w-3 h-3 text-[#edbf74]" />
-                <span>Editar</span>
-              </label>
-            </div>
-          )}
+          {/* Botón flotante para cambiar foto */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              fileInputPortaRef.current?.click();
+            }}
+            className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-black/75 hover:bg-black text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md border border-[#BD944D]/60 active:scale-95 cursor-pointer backdrop-blur-xs"
+            title="Cambiar foto"
+          >
+            <Camera className="w-3 h-3 text-[#edbf74]" />
+            <span>Cambiar foto</span>
+          </button>
         </div>
       </div>
 
