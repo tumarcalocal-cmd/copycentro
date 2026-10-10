@@ -94,8 +94,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#eceff3] text-[#102338] flex flex-col items-center justify-start antialiased font-sans selection:bg-[#BD944D]/25">
-      {/* Desktop view switcher affordance (Solo visible en desarrollo) */}
-      {isDevHost() && (
+      {/* Desktop view switcher affordance (Solo visible en Modo Editor) */}
+      {isDevHost() && isEditorMode && (
         <div className="hidden lg:flex items-center gap-2 fixed top-3 left-4 z-50 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-200/80 shadow-xs text-xs text-slate-600 font-medium">
           <span>Vista:</span>
           <button
