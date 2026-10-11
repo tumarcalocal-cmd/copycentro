@@ -8,18 +8,18 @@ export interface CardTextConfig {
 
 export const DEFAULT_CARD_TEXTS: Record<'card1' | 'card2', CardTextConfig> = {
   card1: {
-    title: 'Empastados de Tesis',
-    subtitle: 'Tapa dura y letras en oro',
-    visible: true,
+    title: '',
+    subtitle: '',
+    visible: false,
   },
   card2: {
-    title: 'Portadiplomas Finos',
-    subtitle: 'Universitarios y colegiales',
-    visible: true,
+    title: '',
+    subtitle: '',
+    visible: false,
   },
 };
 
-const STORAGE_KEY = 'pdp_showcase_card_texts_v2';
+const STORAGE_KEY = 'pdp_showcase_card_texts_v3';
 
 export function useCardTexts() {
   const [cardTexts, setCardTexts] = useState<Record<'card1' | 'card2', CardTextConfig>>(() => {

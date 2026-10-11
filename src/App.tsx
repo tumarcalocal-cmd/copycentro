@@ -144,23 +144,7 @@ export default function App() {
         </aside>
       )}
 
-      {/* Botón discreto flotante en la esquina inferior derecha cuando está en Vista Cliente para regresar fácilmente al editor */}
-      {isDevHost() && !isEditorMode && (
-        <aside 
-          aria-label="Volver a modo editor"
-          className="fixed bottom-3 right-3 z-50 opacity-30 hover:opacity-100 transition-opacity duration-300"
-        >
-          <button
-            type="button"
-            onClick={() => toggleClientPreview(false)}
-            className="flex items-center gap-1.5 bg-[#0a1829] hover:bg-[#071322] text-[#edbf74] text-[11px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-[#BD944D] cursor-pointer transition-transform active:scale-95 backdrop-blur-md"
-            title="Habilitar edición nuevamente"
-          >
-            <Edit3 className="w-3.5 h-3.5 text-[#edbf74]" />
-            <span>Volver a Editor</span>
-          </button>
-        </aside>
-      )}
+
 
       {/* Main App Container */}
       <div 

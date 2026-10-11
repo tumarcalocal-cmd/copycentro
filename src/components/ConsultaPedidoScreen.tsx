@@ -239,7 +239,7 @@ export const ConsultaPedidoScreen: React.FC<ConsultaPedidoScreenProps> = () => {
               <span className="font-bold text-slate-900 block mb-0.5">
                 Tiempos Habituales de Taller
               </span>
-              <p>• Empastados de Tesis: 24 a 48 horas hábiles</p>
+              <p>• Empastados universitarios: 24 a 48 horas hábiles</p>
               <p>• Portadiplomas de Graduación: 24 a 72 horas hábiles</p>
               <p>• Trabajos con entrega urgente: previa coordinación con taller</p>
             </div>

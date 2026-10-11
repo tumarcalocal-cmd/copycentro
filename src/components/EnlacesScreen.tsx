@@ -551,7 +551,7 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
             Calidad Institucional Garantizada
           </h4>
           <p className="text-[11px] text-slate-500 mt-0.5">
-            Tesis, tesinas, tomos de jurisprudencia
+            Empastados universitarios, tomos de jurisprudencia
           </p>
         </div>
       </div>

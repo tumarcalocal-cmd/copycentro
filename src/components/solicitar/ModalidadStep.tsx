@@ -17,9 +17,6 @@ export const ModalidadStep: React.FC<ModalidadStepProps> = ({
         <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wide">
           A. Modalidad del Servicio
         </h2>
-        <span className="text-[11px] font-semibold text-[#BD944D]">
-          Paso 1 de 6
-        </span>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
