@@ -1,8 +1,8 @@
 import { CoverColor, DesignShowcase, OrderTrackResult } from '../types';
 
 export const HERO_IMAGES = {
-  acabadosOro: '/images/modelos/tesis4.jpg',
-  portadiplomas: '/images/portadiplomas/hero.jpg',
+  acabadosOro: '/images/inicio_empastados.jpg',
+  portadiplomas: '/images/inicio_portadiplomas.jpg',
 };
 
 export const COVER_COLORS: CoverColor[] = [

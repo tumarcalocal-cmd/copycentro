@@ -5,8 +5,8 @@ const STORAGE_PREFIX = 'pdp_hero_';
 
 export function useHeroPhotos() {
   const [heroPhotos, setHeroPhotos] = useState<Record<string, string>>({
-    acabadosOro: '/images/modelos/tesis4.jpg',
-    portadiplomas: '/images/portadiplomas/hero.jpg',
+    acabadosOro: '/images/inicio_empastados.jpg',
+    portadiplomas: '/images/inicio_portadiplomas.jpg',
   });
 
   useEffect(() => {
@@ -18,12 +18,12 @@ export function useHeroPhotos() {
       localStorage.removeItem('pdp_hero_portadiplomas');
 
       // Cargar foto subida por el usuario si existe, o usar la foto original de taller
-      const customOro = localStorage.getItem('pdp_hero_custom_acabadosOro') || localStorage.getItem('pdp_modelo_photo_mod-01');
+      const customOro = localStorage.getItem('pdp_hero_custom_acabadosOro');
       const customPorta = localStorage.getItem('pdp_hero_custom_portadiplomas');
 
       setHeroPhotos({
-        acabadosOro: customOro || '/images/modelos/tesis4.jpg',
-        portadiplomas: customPorta || '/images/portadiplomas/hero.jpg',
+        acabadosOro: customOro || '/images/inicio_empastados.jpg',
+        portadiplomas: customPorta || '/images/inicio_portadiplomas.jpg',
       });
     } catch {
       // localStorage fallback
@@ -45,11 +45,6 @@ export function useHeroPhotos() {
       if (optimized) {
         setHeroPhotos(prev => ({ ...prev, [slot]: optimized }));
         localStorage.setItem(`pdp_hero_custom_${slot}`, optimized);
-        if (slot === 'acabadosOro') {
-          localStorage.setItem('pdp_modelo_photo_mod-01', optimized);
-        } else {
-          localStorage.setItem('pdp_portadiploma_photo_port-01', optimized);
-        }
       }
     } catch (err) {
       console.warn('Almacenamiento local:', err);
