@@ -68,7 +68,6 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
         if (optimized) {
           setHeroBannerPhoto(optimized);
           localStorage.setItem('pdp_portadiploma_hero_banner', optimized);
-          localStorage.setItem('pdp_portadiploma_photo_port-01', optimized);
         }
       } catch (err) {
         console.warn(err);
