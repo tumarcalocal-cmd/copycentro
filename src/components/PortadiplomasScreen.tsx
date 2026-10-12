@@ -53,8 +53,8 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
 
   // Foto personalizada del banner de portadiplomas
   const [heroBannerPhoto, setHeroBannerPhoto] = useState<string>(() => {
-    if (typeof window === 'undefined') return '/images/portadiplomas/port1.png';
-    return localStorage.getItem('pdp_portadiploma_hero_banner') || localStorage.getItem('pdp_portadiploma_photo_port-01') || '/images/portadiplomas/port1.png';
+    if (typeof window === 'undefined') return '/images/portadiplomas/hero.jpg';
+    return localStorage.getItem('pdp_portadiploma_hero_banner') || '/images/portadiplomas/hero.jpg';
   });
   const heroFileInputRef = useRef<HTMLInputElement>(null);
 
