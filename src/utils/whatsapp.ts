@@ -24,6 +24,7 @@ export const formatEmpastadoMessage = (
   let message = `Hola, quisiera solicitar información sobre este trabajo.\n\n` +
     `Servicio: Empastado\n` +
     `Modalidad: ${modalidadText}\n` +
+    `Para retirar en: ${config.retiro || 'Por confirmar'}\n` +
     `Color: ${colorName}\n` +
     `Cantidad: ${config.copies} ${config.copies === 1 ? 'tomo' : 'tomos'}\n` +
     `Papel: ${papelText}\n` +
@@ -67,6 +68,7 @@ export const formatDiplomaMessage = (config: DiplomaConfig): string => {
     `*DETALLES DE LA SOLICITUD:*\n` +
     `• Características especiales: ${config.tipoProducto}\n` +
     `• Nivel educativo: ${config.nivel}\n` +
+    `• Para retirar en: ${config.retiro || 'Por confirmar'}\n` +
     `• Material de tapa: ${config.material}\n` +
     `• Cantidad: ${config.cantidad} ${config.cantidad === 1 ? 'unidad' : 'unidades'}\n` +
     `• Color / Acabado: ${config.diseno}\n` +

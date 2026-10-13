@@ -73,7 +73,7 @@ export const ColorStep: React.FC<ColorStepProps> = ({
         <div className="flex items-center gap-1.5">
           <span className="text-sm">🎨</span>
           <span className="text-xs font-bold text-slate-900">
-            B. Escoge el color de tu Cubierta
+            C. Escoge el color de tu Cubierta
           </span>
         </div>
       </div>

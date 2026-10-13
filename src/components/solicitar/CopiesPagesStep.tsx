@@ -29,7 +29,7 @@ export const CopiesPagesStep: React.FC<CopiesPagesStepProps> = ({
           <div className="flex items-center gap-1.5">
             <span className="text-sm">📑</span>
             <span className="text-xs font-bold text-slate-900">
-              C. Cantidad de tomos
+              D. Cantidad de tomos
             </span>
           </div>
           <p className="text-[11px] text-slate-500 mt-0.5">
@@ -67,7 +67,7 @@ export const CopiesPagesStep: React.FC<CopiesPagesStepProps> = ({
           <div className="flex items-center gap-1.5">
             <span className="text-sm">📄</span>
             <span className="text-xs font-bold text-slate-900">
-              D. Parámetros de Impresión
+              E. Parámetros de Impresión
             </span>
           </div>
           <span className="bg-slate-200/80 text-slate-700 text-[10px] font-semibold px-2 py-0.5 rounded-md">

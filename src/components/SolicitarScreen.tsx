@@ -10,6 +10,7 @@ import { COVER_COLORS } from '../data/mockData';
 import { EmpastadoConfig } from '../types';
 import { ModalidadStep } from './solicitar/ModalidadStep';
 import { ColorStep } from './solicitar/ColorStep';
+import { RetiroStep } from './solicitar/RetiroStep';
 import { CopiesPagesStep } from './solicitar/CopiesPagesStep';
 import { PersonalizacionStep } from './solicitar/PersonalizacionStep';
 import { DocumentUploadStep } from './solicitar/DocumentUploadStep';
@@ -123,7 +124,13 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
         onChangeModalidad={(modalidad) => setConfig(prev => ({ ...prev, modalidad }))}
       />
 
-      {/* STEP B: Color de Cubierta */}
+      {/* STEP B: Para retirar en */}
+      <RetiroStep
+        retiro={config.retiro}
+        onChangeRetiro={(retiro) => setConfig(prev => ({ ...prev, retiro }))}
+      />
+
+      {/* STEP C: Color de Cubierta */}
       <ColorStep
         selectedColorId={config.colorId}
         onChangeColor={(colorId) => setConfig(prev => ({ ...prev, colorId }))}

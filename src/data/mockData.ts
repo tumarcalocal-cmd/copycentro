@@ -162,3 +162,10 @@ export const WORKSHOP_INFO = {
   email: 'contacto@empastadospty.com',
 };
 
+
+// Opciones de retiro / entrega del pedido
+export const RETIRO_OPTIONS = [
+  'Local Panamá',
+  'Local Santiago',
+  'Envío a otras provincias',
+];

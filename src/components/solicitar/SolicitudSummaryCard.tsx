@@ -48,6 +48,11 @@ export const SolicitudSummaryCard: React.FC<SolicitudSummaryCardProps> = ({
         </div>
 
         <div className="flex justify-between items-center text-slate-300">
+          <span>Para retirar en:</span>
+          <span className="font-semibold text-white">{config.retiro || 'Por confirmar'}</span>
+        </div>
+
+        <div className="flex justify-between items-center text-slate-300">
           <span>Color de cubierta:</span>
           <span className="font-semibold text-white">{colorName}</span>
         </div>

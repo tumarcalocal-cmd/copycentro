@@ -38,6 +38,10 @@ export const DiplomaSummaryCard: React.FC<DiplomaSummaryCardProps> = ({
         <span className="font-semibold text-white">{config.nivel}</span>
       </div>
       <div className="flex justify-between items-center text-slate-300">
+        <span>Para retirar en:</span>
+        <span className="font-semibold text-white">{config.retiro || 'Por confirmar'}</span>
+      </div>
+      <div className="flex justify-between items-center text-slate-300">
         <span>Material:</span>
         <span className="font-semibold text-white">{config.material}</span>
       </div>

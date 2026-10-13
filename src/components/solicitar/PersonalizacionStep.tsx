@@ -30,7 +30,7 @@ export const PersonalizacionStep: React.FC<PersonalizacionStepProps> = ({
       <div className="flex items-center gap-1.5 mb-3">
         <span className="text-sm">🛡️</span>
         <h2 className="text-xs font-bold text-slate-900">
-          E. Grabado y Personalización
+          F. Grabado y Personalización
         </h2>
       </div>
 

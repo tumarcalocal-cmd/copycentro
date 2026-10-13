@@ -25,7 +25,7 @@ export const DocumentUploadStep: React.FC<DocumentUploadStepProps> = ({
         <div className="flex items-center gap-1.5 mb-2.5">
           <span className="text-sm">📎</span>
           <h2 className="text-xs font-bold text-slate-900">
-            F. Documento para Revisión y Portada
+            G. Documento para Revisión y Portada
           </h2>
         </div>
 

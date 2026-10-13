@@ -27,6 +27,7 @@ export interface EmpastadoConfig {
   uploadedFileSize: string | null;
   detectedPages: number | null;
   observaciones?: string;
+  retiro?: string;
   customerName?: string;
   customerPhone?: string;
   institution?: string;
@@ -44,6 +45,7 @@ export interface DiplomaConfig {
   diseno: string;
   archivo?: string;
   observaciones?: string;
+  retiro?: string;
 }
 
 export interface ModeloShowcase {
