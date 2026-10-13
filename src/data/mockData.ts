@@ -153,9 +153,9 @@ export const MOCK_ORDERS: Record<string, OrderTrackResult> = {
 
 export const WORKSHOP_INFO = {
   name: 'Empastados y Portadiplomas Panamá',
-  phone: '+507 6000-0000',
-  whatsapp: '50760000000',
-  displayPhone: '+507 6000-0000',
+  phone: '+50764960006',
+  whatsapp: '50764960006',
+  displayPhone: '+507 6496-0006',
   address: 'Panamá',
   hoursWeekday: 'Lunes a Viernes: 8:00 AM - 5:00 PM',
   hoursSaturday: 'Sábados: 8:00 AM - 1:00 PM',
