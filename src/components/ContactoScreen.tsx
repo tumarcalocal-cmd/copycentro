@@ -20,9 +20,9 @@ export const ContactoScreen: React.FC<ContactoScreenProps> = () => {
     <div className="flex flex-col w-full px-4 sm:px-5 pb-28 pt-1">
       {/* Brand Header */}
       <div className="text-center mb-5">
-        <div className="w-14 h-14 rounded-full bg-[#102338] text-[#BD944D] flex items-center justify-center font-bold text-lg border-2 border-[#BD944D]/40 mx-auto mb-2 shadow-md">
-          PDP
-        </div>
+        <div className="w-14 h-14 rounded-full overflow-hidden shrink-0 mx-auto mb-2 shadow-md">
+  <img src="/images/logo.png" alt="Porta Diplomas Panamá" className="w-full h-full rounded-full object-cover" />
+</div>
         <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
           Porta Diplomas Panamá
         </h1>
