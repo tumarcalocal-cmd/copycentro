@@ -67,9 +67,6 @@ export const ContactoScreen: React.FC<ContactoScreenProps> = () => {
             <span>Llamar al Negocio</span>
           </button>
         </div>
-        <p className="text-center text-sm font-semibold text-[#102338] -mt-1">
-          Teléfono y WhatsApp: <a href={`tel:${WORKSHOP_INFO.phone}`} className="text-[#BD944D]">{WORKSHOP_INFO.displayPhone}</a>
-        </p>
 
         {/* Details Cards */}
         <div className="space-y-3 pt-1">
