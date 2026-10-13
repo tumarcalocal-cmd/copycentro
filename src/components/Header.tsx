@@ -58,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-3">
                 <div className="w-11 h-11 rounded-full overflow-hidden shrink-0">
-  <img src="/images/logo.png" alt="Porta Diplomas Panamá" className="w-full h-full rounded-full object-cover" />
+  <img src="/images/logo.png?v=2" alt="Porta Diplomas Panamá" className="w-full h-full rounded-full object-cover" />
 </div>
                 <div>
                   <h3 className="font-bold text-slate-900 text-sm">Portadiplomas Panamá</h3>

@@ -32,7 +32,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
         <div className="flex items-center justify-between pb-4 border-b border-slate-100">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
-  <img src="/images/logo.png" alt="Porta Diplomas Panamá" className="w-full h-full rounded-full object-cover" />
+  <img src="/images/logo.png?v=2" alt="Porta Diplomas Panamá" className="w-full h-full rounded-full object-cover" />
 </div>
             <div>
               <h3 className="font-bold text-slate-900 text-lg leading-tight">Porta Diplomas Panamá</h3>

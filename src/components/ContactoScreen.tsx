@@ -21,7 +21,7 @@ export const ContactoScreen: React.FC<ContactoScreenProps> = () => {
       {/* Brand Header */}
       <div className="text-center mb-5">
         <div className="w-14 h-14 rounded-full overflow-hidden shrink-0 mx-auto mb-2 shadow-md">
-  <img src="/images/logo.png" alt="Porta Diplomas Panamá" className="w-full h-full rounded-full object-cover" />
+  <img src="/images/logo.png?v=2" alt="Porta Diplomas Panamá" className="w-full h-full rounded-full object-cover" />
 </div>
         <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
           Porta Diplomas Panamá

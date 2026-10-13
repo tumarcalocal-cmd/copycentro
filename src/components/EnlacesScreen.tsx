@@ -107,7 +107,7 @@ export const EnlacesScreen: React.FC<EnlacesScreenProps> = ({
       {/* Brand Emblem / Avatar */}
       <div className="relative mb-3 flex items-center justify-center">
         <div className="w-22 h-22 rounded-full overflow-hidden shadow-lg">
-          <img src="/images/logo.png" alt="Porta Diplomas Panamá" className="w-full h-full rounded-full object-cover" />
+          <img src="/images/logo.png?v=2" alt="Porta Diplomas Panamá" className="w-full h-full rounded-full object-cover" />
         </div>
       </div>
 
