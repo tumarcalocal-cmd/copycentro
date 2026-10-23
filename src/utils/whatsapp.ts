@@ -4,6 +4,38 @@ import { EmpastadoConfig, DiplomaConfig } from '../types';
 /**
  * Encodes text and triggers WhatsApp web or app redirect safely.
  */
+/**
+ * Envía el mensaje junto con el archivo adjunto.
+ * En celulares usa el menú de compartir del sistema, que permite mandar el archivo real a WhatsApp.
+ * Si el dispositivo no lo permite (computadoras), abre el chat con el texto y avisa que adjunte el archivo.
+ */
+export const sendWhatsAppWithFile = (text: string, file: File | null): void => {
+  if (!file) {
+    openWhatsApp(text);
+    return;
+  }
+
+  const shareData: ShareData = { files: [file], text };
+  const canShareFile =
+    typeof navigator !== 'undefined' &&
+    typeof navigator.share === 'function' &&
+    typeof navigator.canShare === 'function' &&
+    navigator.canShare({ files: [file] });
+
+  if (canShareFile) {
+    navigator.share(shareData).catch((err: unknown) => {
+      // Si la persona cerró el menú de compartir no hacemos nada; si falló, usamos el link normal.
+      if (err instanceof DOMException && err.name === 'AbortError') return;
+      openWhatsApp(text);
+      alert(`Recuerda adjuntar tu archivo "${file.name}" en el chat de WhatsApp.`);
+    });
+    return;
+  }
+
+  openWhatsApp(text);
+  alert(`Se abrió WhatsApp con tu solicitud. Adjunta tu archivo "${file.name}" en el chat antes de enviar.`);
+};
+
 export const openWhatsApp = (text: string, phone: string = WORKSHOP_INFO.whatsapp): void => {
   const cleanPhone = phone.replace(/[^0-9]/g, '');
   const encoded = encodeURIComponent(text);

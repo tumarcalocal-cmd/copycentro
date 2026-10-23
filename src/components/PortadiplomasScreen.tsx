@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Award, ChevronDown, Minus, Plus, X, Check, Image as ImageIcon, Camera, Trash2, RefreshCw, Upload } from 'lucide-react';
 import { WORKSHOP_INFO, RETIRO_OPTIONS } from '../data/mockData';
+import { sendWhatsAppWithFile } from '../utils/whatsapp';
+import { setAttachment, getAttachment } from '../utils/attachmentStore';
 import { DiplomaConfig } from '../types';
 import { DiplomaSummaryCard } from './diplomas/DiplomaSummaryCard';
 import { PortadiplomasModelosView } from './diplomas/PortadiplomasModelosView';
@@ -171,6 +173,9 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
         const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
         setPhotoPreview(dataUrl);
         const fileName = `foto_camara_${Date.now().toString().slice(-6)}.jpg`;
+        canvas.toBlob((blob) => {
+          if (blob) setAttachment('diploma', new File([blob], fileName, { type: 'image/jpeg' }));
+        }, 'image/jpeg', 0.85);
         setConfig(prev => ({ ...prev, archivo: fileName }));
       }
     }
@@ -192,6 +197,7 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setAttachment('diploma', file);
       const reader = new FileReader();
       reader.onload = () => {
         setPhotoPreview(reader.result as string);
@@ -204,6 +210,7 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
   const handleRemovePhoto = () => {
     setPhotoPreview(null);
     setConfig(prev => ({ ...prev, archivo: undefined }));
+    setAttachment('diploma', null);
     if (fileInputRef.current) fileInputRef.current.value = '';
     if (cameraInputRef.current) cameraInputRef.current.value = '';
   };
@@ -232,8 +239,7 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
 
     message += `\nQuedo pendiente de que me confirmen el precio y disponibilidad.`;
 
-    const encoded = encodeURIComponent(message);
-    window.open(`https://wa.me/${WORKSHOP_INFO.whatsapp}?text=${encoded}`, '_blank');
+    sendWhatsAppWithFile(message, config.archivo ? getAttachment('diploma') : null);
   };
 
   return (
