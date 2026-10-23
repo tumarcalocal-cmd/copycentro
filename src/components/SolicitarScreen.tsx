@@ -16,7 +16,7 @@ import { PersonalizacionStep } from './solicitar/PersonalizacionStep';
 import { DocumentUploadStep } from './solicitar/DocumentUploadStep';
 import { SolicitudSummaryCard } from './solicitar/SolicitudSummaryCard';
 import { useFileUpload } from '../hooks/useFileUpload';
-import { formatEmpastadoMessage, openWhatsApp } from '../utils/whatsapp';
+import { formatEmpastadoMessage, sendWhatsAppWithUpload } from '../utils/whatsapp';
 import { getAttachment } from '../utils/attachmentStore';
 
 interface SolicitarScreenProps {
@@ -60,10 +60,11 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
     config.cdPocket ? 'Bolsillo CD' : null,
   ].filter(Boolean).join(' + ') || 'Sin extras';
 
-  const handleSendWhatsApp = () => {
-    const message = formatEmpastadoMessage(config, selectedColor.name, personalizacionesList);
-    openWhatsApp(message);
-  };
+  const handleSendWhatsApp = () =>
+    sendWhatsAppWithUpload(
+      (fileUrl) => formatEmpastadoMessage(config, selectedColor.name, personalizacionesList, fileUrl),
+      config.uploadedFileName ? getAttachment('empastado') : null
+    );
 
   return (
     <div className="flex flex-col w-full px-4 sm:px-5 pb-28 pt-1">
@@ -177,7 +178,6 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
         colorName={selectedColor.name}
         personalizacionesList={personalizacionesList}
         onSendWhatsApp={handleSendWhatsApp}
-        attachment={config.uploadedFileName ? getAttachment('empastado') : null}
       />
     </div>
   );

@@ -4,24 +4,38 @@ import { EmpastadoConfig, DiplomaConfig } from '../types';
 /**
  * Encodes text and triggers WhatsApp web or app redirect safely.
  */
-const isMobileDevice = (): boolean => {
-  if (typeof navigator === 'undefined') return false;
-  const ua = navigator.userAgent || '';
-  const isIpadOS = /Macintosh/.test(ua) && navigator.maxTouchPoints > 1;
-  return /Android|iPhone|iPad|iPod/i.test(ua) || isIpadOS;
+const buildWhatsAppUrl = (text: string, phone: string = WORKSHOP_INFO.whatsapp): string =>
+  `https://wa.me/${phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(text)}`;
+
+/**
+ * Un solo botón: si hay archivo lo sube a la nube y agrega el enlace al mensaje; luego abre el chat del taller.
+ * La pestaña se abre antes de subir para que el navegador no la bloquee.
+ * buildMessage recibe el enlace (o null si no hay archivo o falló la subida).
+ */
+export const sendWhatsAppWithUpload = async (
+  buildMessage: (fileUrl: string | null) => string,
+  file: File | null
+): Promise<void> => {
+  if (!file) {
+    openWhatsApp(buildMessage(null));
+    return;
+  }
+
+  const win = window.open('', '_blank');
+  if (win) {
+    win.document.write('<p style="font-family:sans-serif;text-align:center;margin-top:40vh">Subiendo tu archivo y abriendo WhatsApp…</p>');
+  }
+
+  const { uploadAttachment } = await import('./fileUpload');
+  const url = await uploadAttachment(file);
+  const waUrl = buildWhatsAppUrl(buildMessage(url));
+
+  if (win && !win.closed) {
+    win.location.href = waUrl;
+  } else {
+    window.location.href = waUrl;
+  }
 };
-
-const canShareFile = (file: File): boolean =>
-  isMobileDevice() &&
-  typeof navigator.share === 'function' &&
-  typeof navigator.canShare === 'function' &&
-  navigator.canShare({ files: [file] });
-
-export const canShareFileToApps = (file: File | null): boolean => !!file && canShareFile(file);
-
-/** Abre el menú de compartir del celular con el archivo, para mandarlo al chat de WhatsApp. */
-export const shareFileToWhatsApp = (file: File): Promise<void> =>
-  navigator.share({ files: [file] }).catch(() => { /* la persona cerró el menú */ });
 
 export const openWhatsApp = (text: string, phone: string = WORKSHOP_INFO.whatsapp): void => {
   const cleanPhone = phone.replace(/[^0-9]/g, '');
@@ -35,7 +49,8 @@ export const openWhatsApp = (text: string, phone: string = WORKSHOP_INFO.whatsap
 export const formatEmpastadoMessage = (
   config: EmpastadoConfig,
   colorName: string,
-  personalizaciones: string
+  personalizaciones: string,
+  fileUrl: string | null = null
 ): string => {
   const modalidadText = config.modalidad === 'solo_empastado' ? 'Solo empastado' : 'Impresión + Empastado';
   const papelText = config.paperType === 'bond_normal' ? 'Normal' : 'Papel algodón de tesis';
@@ -51,7 +66,9 @@ export const formatEmpastadoMessage = (
     `Personalización: ${personalizaciones}\n`;
 
   if (config.uploadedFileName) {
-    message += `Archivo adjunto: ${config.uploadedFileName}\n`;
+    message += fileUrl
+      ? `Archivo adjunto: ${config.uploadedFileName}\nDescargar archivo: ${fileUrl}\n`
+      : `Archivo adjunto: ${config.uploadedFileName} (lo envío por este chat)\n`;
   }
 
   if (config.observaciones?.trim()) {

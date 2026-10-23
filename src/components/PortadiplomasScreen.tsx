@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Award, ChevronDown, Minus, Plus, X, Check, Image as ImageIcon, Camera, Trash2, RefreshCw, Upload } from 'lucide-react';
 import { WORKSHOP_INFO, RETIRO_OPTIONS } from '../data/mockData';
-import { openWhatsApp } from '../utils/whatsapp';
+import { sendWhatsAppWithUpload } from '../utils/whatsapp';
 import { setAttachment, getAttachment } from '../utils/attachmentStore';
 import { DiplomaConfig } from '../types';
 import { DiplomaSummaryCard } from './diplomas/DiplomaSummaryCard';
@@ -218,7 +218,7 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
   // Modo edición: solo habilitado en el editor/desarrollo para proteger las fotos del público
   const isEditingMode = useEditorMode();
 
-  const handleSendWhatsApp = () => {
+  const handleSendWhatsApp = () => sendWhatsAppWithUpload((fileUrl) => {
     let message = `Hola, quisiera solicitar información sobre este trabajo.\n\n` +
       `Servicio: Portadiplomas y Diplomas\n` +
       `Nivel: ${config.nivel}\n` +
@@ -234,13 +234,14 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
     }
 
     if (config.archivo) {
-      message += `Foto de referencia: ${config.archivo} (la adjunto en esta conversación)\n`;
+      message += fileUrl
+        ? `Foto de referencia: ${config.archivo}\nVer foto: ${fileUrl}\n`
+        : `Foto de referencia: ${config.archivo} (la envío por este chat)\n`;
     }
 
     message += `\nQuedo pendiente de que me confirmen el precio y disponibilidad.`;
-
-    openWhatsApp(message);
-  };
+    return message;
+  }, config.archivo ? getAttachment('diploma') : null);
 
   return (
     <div className="flex flex-col w-full px-4 sm:px-5 pb-28 pt-1">
@@ -915,7 +916,7 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
           </div>
 
           {/* Resumen de tu solicitud */}
-          <DiplomaSummaryCard config={config} onSendWhatsApp={handleSendWhatsApp} attachment={config.archivo ? getAttachment('diploma') : null} />
+          <DiplomaSummaryCard config={config} onSendWhatsApp={handleSendWhatsApp} />
         </div>
       )}
 

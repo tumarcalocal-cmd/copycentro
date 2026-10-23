@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { FileCheck, MessageCircle, Loader2 } from 'lucide-react';
 import { EmpastadoConfig } from '../../types';
-import { AttachmentShareButton } from '../common/AttachmentShareButton';
 
 interface SolicitudSummaryCardProps {
   config: EmpastadoConfig;
   colorName: string;
   personalizacionesList: string;
-  onSendWhatsApp: () => void;
-  attachment?: File | null;
+  onSendWhatsApp: () => void | Promise<void>;
 }
 
 export const SolicitudSummaryCard: React.FC<SolicitudSummaryCardProps> = ({
@@ -16,17 +14,17 @@ export const SolicitudSummaryCard: React.FC<SolicitudSummaryCardProps> = ({
   colorName,
   personalizacionesList,
   onSendWhatsApp,
-  attachment = null,
 }) => {
   const [isSending, setIsSending] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (isSending) return;
     setIsSending(true);
-    setTimeout(() => {
-      onSendWhatsApp();
+    try {
+      await onSendWhatsApp();
+    } finally {
       setTimeout(() => setIsSending(false), 1200);
-    }, 350);
+    }
   };
 
   return (
@@ -129,8 +127,6 @@ export const SolicitudSummaryCard: React.FC<SolicitudSummaryCardProps> = ({
           </>
         )}
       </button>
-
-      <AttachmentShareButton file={attachment} fileName={config.uploadedFileName} />
 
       <p className="text-[11px] text-slate-400 text-center mt-3">
         El taller confirmará disponibilidad, detalles y precio directamente por WhatsApp.

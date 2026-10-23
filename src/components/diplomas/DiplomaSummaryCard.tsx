@@ -1,28 +1,26 @@
 import React, { useState } from 'react';
 import { FileCheck, MessageSquare, Loader2 } from 'lucide-react';
 import { DiplomaConfig } from '../../types';
-import { AttachmentShareButton } from '../common/AttachmentShareButton';
 
 interface DiplomaSummaryCardProps {
   config: DiplomaConfig;
-  onSendWhatsApp: () => void;
-  attachment?: File | null;
+  onSendWhatsApp: () => void | Promise<void>;
 }
 
 export const DiplomaSummaryCard: React.FC<DiplomaSummaryCardProps> = ({
   config,
   onSendWhatsApp,
-  attachment = null,
 }) => {
   const [isSending, setIsSending] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (isSending) return;
     setIsSending(true);
-    setTimeout(() => {
-      onSendWhatsApp();
+    try {
+      await onSendWhatsApp();
+    } finally {
       setTimeout(() => setIsSending(false), 1200);
-    }, 350);
+    }
   };
 
   return (
@@ -96,8 +94,6 @@ export const DiplomaSummaryCard: React.FC<DiplomaSummaryCardProps> = ({
           </>
         )}
       </button>
-
-      <AttachmentShareButton file={attachment} fileName={config.archivo} />
 
       <p className="text-[11px] text-slate-400 text-center pt-1">
         El taller confirmará disponibilidad, detalles y precio directamente por WhatsApp.
