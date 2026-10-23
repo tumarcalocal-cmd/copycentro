@@ -16,7 +16,7 @@ import { PersonalizacionStep } from './solicitar/PersonalizacionStep';
 import { DocumentUploadStep } from './solicitar/DocumentUploadStep';
 import { SolicitudSummaryCard } from './solicitar/SolicitudSummaryCard';
 import { useFileUpload } from '../hooks/useFileUpload';
-import { formatEmpastadoMessage, sendWhatsAppWithFile } from '../utils/whatsapp';
+import { formatEmpastadoMessage, openWhatsApp } from '../utils/whatsapp';
 import { getAttachment } from '../utils/attachmentStore';
 
 interface SolicitarScreenProps {
@@ -62,7 +62,7 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
 
   const handleSendWhatsApp = () => {
     const message = formatEmpastadoMessage(config, selectedColor.name, personalizacionesList);
-    sendWhatsAppWithFile(message, config.uploadedFileName ? getAttachment('empastado') : null);
+    openWhatsApp(message);
   };
 
   return (
@@ -177,6 +177,7 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
         colorName={selectedColor.name}
         personalizacionesList={personalizacionesList}
         onSendWhatsApp={handleSendWhatsApp}
+        attachment={config.uploadedFileName ? getAttachment('empastado') : null}
       />
     </div>
   );

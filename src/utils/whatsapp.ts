@@ -17,77 +17,11 @@ const canShareFile = (file: File): boolean =>
   typeof navigator.canShare === 'function' &&
   navigator.canShare({ files: [file] });
 
-/**
- * Ventana con 2 pasos claros:
- * 1) Abre el chat del taller con el mensaje de la solicitud.
- * 2) Envía el archivo a ese chat (en celular con el menú de compartir; en computadora se adjunta con el clip).
- */
-export const sendWhatsAppWithFile = (text: string, file: File | null): void => {
-  if (!file || typeof document === 'undefined') {
-    openWhatsApp(text);
-    return;
-  }
+export const canShareFileToApps = (file: File | null): boolean => !!file && canShareFile(file);
 
-  const mobileShare = canShareFile(file);
-  const overlay = document.createElement('div');
-  overlay.setAttribute('role', 'dialog');
-  overlay.setAttribute('aria-modal', 'true');
-  overlay.style.cssText =
-    'position:fixed;inset:0;z-index:9999;background:rgba(7,19,34,.65);display:flex;align-items:flex-end;justify-content:center;padding:16px;font-family:Inter,system-ui,sans-serif;';
-
-  const step2Text = mobileShare
-    ? 'Toca el botón, escoge <b>WhatsApp</b> y luego el chat de <b>Porta Diplomas</b> (aparece de primero en la lista).'
-    : 'En el chat de WhatsApp toca el clip 📎 (o arrastra el archivo) y adjunta <b>' + file.name.replace(/</g, '&lt;') + '</b>.';
-
-  overlay.innerHTML = `
-    <div style="background:#fff;width:100%;max-width:420px;border-radius:20px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.3);margin-bottom:env(safe-area-inset-bottom);">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <strong style="font-size:17px;color:#102338;">Envía tu solicitud en 2 pasos</strong>
-        <button data-close aria-label="Cerrar" style="border:0;background:#f1f5f9;border-radius:999px;width:32px;height:32px;font-size:18px;color:#475569;cursor:pointer;">×</button>
-      </div>
-      <p style="font-size:13px;color:#64748b;margin:0 0 14px;">Así el taller recibe tu mensaje y tu archivo juntos.</p>
-
-      <div data-step1 style="border:2px solid #BD944D;border-radius:14px;padding:14px;margin-bottom:10px;">
-        <div style="font-size:14px;font-weight:700;color:#102338;margin-bottom:4px;">Paso 1: Envía el mensaje</div>
-        <div style="font-size:13px;color:#475569;margin-bottom:10px;">Se abre WhatsApp con tu solicitud lista. Dale enviar y regresa a esta página.</div>
-        <button data-btn1 style="width:100%;min-height:46px;border:0;border-radius:12px;background:#059669;color:#fff;font-weight:700;font-size:15px;cursor:pointer;">Abrir WhatsApp</button>
-      </div>
-
-      <div data-step2 style="border:2px solid #e2e8f0;border-radius:14px;padding:14px;opacity:.55;">
-        <div style="font-size:14px;font-weight:700;color:#102338;margin-bottom:4px;">Paso 2: Envía tu archivo</div>
-        <div style="font-size:13px;color:#475569;margin-bottom:${mobileShare ? '10px' : '0'};">${step2Text}</div>
-        ${mobileShare ? '<button data-btn2 style="width:100%;min-height:46px;border:0;border-radius:12px;background:#102338;color:#fff;font-weight:700;font-size:15px;cursor:pointer;">Enviar archivo</button>' : ''}
-      </div>
-      <button data-done style="display:none;width:100%;margin-top:12px;min-height:42px;border:0;border-radius:12px;background:#f1f5f9;color:#102338;font-weight:600;font-size:14px;cursor:pointer;">Listo, ya lo envié</button>
-    </div>`;
-
-  const close = () => overlay.remove();
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-  overlay.querySelector('[data-close]')?.addEventListener('click', close);
-  overlay.querySelector('[data-done]')?.addEventListener('click', close);
-
-  const step1 = overlay.querySelector('[data-step1]') as HTMLElement;
-  const step2 = overlay.querySelector('[data-step2]') as HTMLElement;
-  const done = overlay.querySelector('[data-done]') as HTMLElement;
-
-  overlay.querySelector('[data-btn1]')?.addEventListener('click', () => {
-    openWhatsApp(text);
-    step1.style.borderColor = '#e2e8f0';
-    step1.style.opacity = '.55';
-    const b1 = overlay.querySelector('[data-btn1]') as HTMLButtonElement;
-    b1.textContent = '✓ Mensaje abierto';
-    b1.style.background = '#94a3b8';
-    step2.style.borderColor = '#BD944D';
-    step2.style.opacity = '1';
-    done.style.display = 'block';
-  });
-
-  overlay.querySelector('[data-btn2]')?.addEventListener('click', () => {
-    navigator.share({ files: [file] }).then(close).catch(() => { /* cerró el menú: se queda en la ventana */ });
-  });
-
-  document.body.appendChild(overlay);
-};
+/** Abre el menú de compartir del celular con el archivo, para mandarlo al chat de WhatsApp. */
+export const shareFileToWhatsApp = (file: File): Promise<void> =>
+  navigator.share({ files: [file] }).catch(() => { /* la persona cerró el menú */ });
 
 export const openWhatsApp = (text: string, phone: string = WORKSHOP_INFO.whatsapp): void => {
   const cleanPhone = phone.replace(/[^0-9]/g, '');

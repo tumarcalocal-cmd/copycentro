@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Award, ChevronDown, Minus, Plus, X, Check, Image as ImageIcon, Camera, Trash2, RefreshCw, Upload } from 'lucide-react';
 import { WORKSHOP_INFO, RETIRO_OPTIONS } from '../data/mockData';
-import { sendWhatsAppWithFile } from '../utils/whatsapp';
+import { openWhatsApp } from '../utils/whatsapp';
 import { setAttachment, getAttachment } from '../utils/attachmentStore';
 import { DiplomaConfig } from '../types';
 import { DiplomaSummaryCard } from './diplomas/DiplomaSummaryCard';
@@ -239,7 +239,7 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
 
     message += `\nQuedo pendiente de que me confirmen el precio y disponibilidad.`;
 
-    sendWhatsAppWithFile(message, config.archivo ? getAttachment('diploma') : null);
+    openWhatsApp(message);
   };
 
   return (
@@ -915,7 +915,7 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
           </div>
 
           {/* Resumen de tu solicitud */}
-          <DiplomaSummaryCard config={config} onSendWhatsApp={handleSendWhatsApp} />
+          <DiplomaSummaryCard config={config} onSendWhatsApp={handleSendWhatsApp} attachment={config.archivo ? getAttachment('diploma') : null} />
         </div>
       )}
 
