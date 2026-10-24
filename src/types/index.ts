@@ -29,6 +29,7 @@ export interface EmpastadoConfig {
   detectedPages: number | null;
   observaciones?: string;
   retiro?: string;
+  entrega?: string;
   customerName?: string;
   customerPhone?: string;
   institution?: string;
@@ -47,6 +48,7 @@ export interface DiplomaConfig {
   archivo?: string;
   observaciones?: string;
   retiro?: string;
+  entrega?: string;
 }
 
 export interface ModeloShowcase {

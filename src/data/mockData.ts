@@ -169,3 +169,9 @@ export const RETIRO_OPTIONS = [
   'Local Santiago',
   'Envío a otras provincias',
 ];
+
+// Opciones de tiempo de entrega
+export const ENTREGA_OPTIONS = [
+  'Normal: 2 a 3 días hábiles',
+  'Pronta entrega (recargo se indica por WhatsApp)',
+];

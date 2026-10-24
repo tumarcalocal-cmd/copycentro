@@ -1,4 +1,5 @@
 import React from 'react';
+import { ENTREGA_OPTIONS } from '../../data/mockData';
 import { UploadCloud, Check, Info, MessageSquareText, X, FileText, Plus } from 'lucide-react';
 
 interface DocumentUploadStepProps {
@@ -9,6 +10,8 @@ interface DocumentUploadStepProps {
   observaciones?: string;
   onFileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeObservaciones: (text: string) => void;
+  entrega?: string;
+  onChangeEntrega: (entrega: string) => void;
 }
 
 export const DocumentUploadStep: React.FC<DocumentUploadStepProps> = ({
@@ -19,6 +22,8 @@ export const DocumentUploadStep: React.FC<DocumentUploadStepProps> = ({
   observaciones = '',
   onFileUpload,
   onChangeObservaciones,
+  entrega,
+  onChangeEntrega,
 }) => {
   return (
     <>
@@ -97,9 +102,25 @@ export const DocumentUploadStep: React.FC<DocumentUploadStepProps> = ({
           <span className="text-sm">⏱️</span>
           <h2 className="text-xs font-bold text-slate-900">H. Tiempo de entrega</h2>
         </div>
-        <div className="bg-white rounded-xl border border-slate-200 p-3 space-y-1">
-          <p className="text-xs font-bold text-[#102338]">2 a 3 días hábiles</p>
-          <p className="text-[11px] text-slate-600">Entrega rápida disponible con recargo. Consúltalo por WhatsApp.</p>
+        <div className="grid grid-cols-1 gap-2">
+          {ENTREGA_OPTIONS.map((item) => {
+            const isSelected = (entrega || ENTREGA_OPTIONS[0]) === item;
+            return (
+              <button
+                key={item}
+                type="button"
+                onClick={() => onChangeEntrega(item)}
+                className={`p-3 rounded-xl border text-left text-xs transition-all flex items-center justify-between cursor-pointer ${
+                  isSelected
+                    ? 'border-[#BD944D] bg-[#102338] text-white font-semibold shadow-xs'
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50/80'
+                }`}
+              >
+                <span className="pr-2">{item}</span>
+                {isSelected && <Check className="w-4 h-4 text-[#edbf74] shrink-0" />}
+              </button>
+            );
+          })}
         </div>
       </div>
 

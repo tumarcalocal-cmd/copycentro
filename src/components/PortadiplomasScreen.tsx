@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Award, ChevronDown, Minus, Plus, X, Check, Image as ImageIcon, Camera, Trash2, RefreshCw, Upload } from 'lucide-react';
-import { WORKSHOP_INFO, RETIRO_OPTIONS } from '../data/mockData';
+import { WORKSHOP_INFO, RETIRO_OPTIONS, ENTREGA_OPTIONS } from '../data/mockData';
 import { sendWhatsAppWithUpload, formatLinks } from '../utils/whatsapp';
 import { setAttachment, getAttachments } from '../utils/attachmentStore';
 import { DiplomaConfig } from '../types';
@@ -227,7 +227,8 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
       `Tipo de producto: ${config.tipoProducto}\n` +
       `Cantidad: ${config.cantidad} ${config.cantidad === 1 ? 'unidad' : 'unidades'}\n` +
       `Personalización: ${config.personalizacion}\n` +
-      `Diseño / Color: ${config.diseno}\n`;
+      `Diseño / Color: ${config.diseno}\n` +
+      `Tiempo de entrega: ${config.entrega || ENTREGA_OPTIONS[0]}\n`;
 
     if (config.observaciones?.trim()) {
       message += `Observaciones: ${config.observaciones.trim()}\n`;
@@ -806,7 +807,69 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
               )}
             </div>
 
-            {/* TARJETA 7: Foto de referencia */}
+            {/* TARJETA 7: Tiempo de entrega */}
+            <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden transition-all">
+              <button
+                type="button"
+                onClick={() => toggleCard(8)}
+                className="w-full p-3.5 sm:p-4 flex items-center justify-between text-left cursor-pointer hover:bg-slate-50/70 transition-colors"
+                aria-expanded={activeCard === 8}
+              >
+                <div className="flex items-center gap-3 min-w-0 pr-2">
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
+                    activeCard === 8 ? 'bg-[#102338] text-[#edbf74]' : 'bg-slate-100 text-slate-700'
+                  }`}>
+                    7
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-xs sm:text-[13px] font-bold text-slate-900 block tracking-tight">
+                      Tiempo de entrega
+                    </span>
+                    <div className="flex items-center gap-1.5 mt-0.5 min-w-0">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#BD944D] shrink-0" />
+                      <span className="text-[11px] font-semibold text-[#875d14] truncate">
+                        {config.entrega || ENTREGA_OPTIONS[0]}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="shrink-0 pl-2">
+                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
+                    activeCard === 8 ? 'rotate-180 text-slate-700' : ''
+                  }`} />
+                </div>
+              </button>
+
+              {activeCard === 8 && (
+                <div className="p-3.5 sm:p-4 pt-1 border-t border-slate-100 bg-slate-50/40 animate-in fade-in">
+                  <div className="grid grid-cols-1 gap-2 pt-2">
+                    {ENTREGA_OPTIONS.map((item) => {
+                      const isSelected = (config.entrega || ENTREGA_OPTIONS[0]) === item;
+                      return (
+                        <button
+                          key={item}
+                          type="button"
+                          onClick={() => {
+                            setConfig(prev => ({ ...prev, entrega: item }));
+                          }}
+                          className={`p-3 rounded-xl border text-left text-xs transition-all flex items-center justify-between cursor-pointer ${
+                            isSelected
+                              ? 'border-[#BD944D] bg-[#102338] text-white font-semibold shadow-xs'
+                              : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50/80'
+                          }`}
+                        >
+                          <span className="truncate pr-2">{item}</span>
+                          {isSelected && <Check className="w-4 h-4 text-[#edbf74] shrink-0" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* TARJETA 8: Foto de referencia */}
             <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden transition-all">
               <button
                 type="button"
@@ -818,7 +881,7 @@ export const PortadiplomasScreen: React.FC<PortadiplomasScreenProps> = ({
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
                     activeCard === 6 ? 'bg-[#102338] text-[#edbf74]' : 'bg-slate-100 text-slate-700'
                   }`}>
-                    7
+                    8
                   </div>
                   <div className="min-w-0">
                     <span className="text-xs sm:text-[13px] font-bold text-slate-900 block tracking-tight">

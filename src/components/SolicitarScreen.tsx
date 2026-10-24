@@ -171,6 +171,8 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
         observaciones={config.observaciones}
         onFileUpload={handleFileUpload}
         onChangeObservaciones={(observaciones) => setConfig(prev => ({ ...prev, observaciones }))}
+        entrega={config.entrega}
+        onChangeEntrega={(entrega) => setConfig(prev => ({ ...prev, entrega }))}
       />
 
       {/* SUMMARY CARD: Resumen de tu solicitud */}

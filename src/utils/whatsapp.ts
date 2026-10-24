@@ -80,7 +80,8 @@ export const formatEmpastadoMessage = (
     `Cantidad: ${config.copies} ${config.copies === 1 ? 'tomo' : 'tomos'}\n` +
     `Papel: ${papelText}\n` +
     `Páginas: ${config.pages}\n` +
-    `Personalización: ${personalizaciones}\n`;
+    `Personalización: ${personalizaciones}\n` +
+    `Tiempo de entrega: ${config.entrega || 'Normal: 2 a 3 días hábiles'}\n`;
 
   if (links.length) {
     message += `\n${formatLinks(links, 'Archivo adjunto')}`;
