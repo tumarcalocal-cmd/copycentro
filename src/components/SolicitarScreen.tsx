@@ -9,7 +9,7 @@ import {
 import { COVER_COLORS } from '../data/mockData';
 import { EmpastadoConfig } from '../types';
 import { ModalidadStep } from './solicitar/ModalidadStep';
-import { ColorStep } from './solicitar/ColorStep';
+import { ColorStep, FULL_COVER_PALETTE } from './solicitar/ColorStep';
 import { RetiroStep } from './solicitar/RetiroStep';
 import { CopiesPagesStep } from './solicitar/CopiesPagesStep';
 import { PersonalizacionStep } from './solicitar/PersonalizacionStep';
@@ -52,7 +52,14 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
     }
   }, [shouldScrollToDesign, onClearScrollToDesign]);
 
-  const selectedColor = COVER_COLORS.find(c => c.id === config.colorId) || COVER_COLORS[4];
+  const selectedColor =
+    FULL_COVER_PALETTE.find(c => c.id === config.colorId) ||
+    COVER_COLORS.find(c => c.id === config.colorId) ||
+    {
+      id: config.colorId,
+      name: config.colorId?.startsWith('#') ? 'Color personalizado' : config.colorId,
+      hex: config.colorId?.startsWith('#') ? config.colorId : '#541525',
+    };
 
   const personalizacionesList = [
     config.goldLogo ? 'Logo ($5.00)' : null,
