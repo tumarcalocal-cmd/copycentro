@@ -1,8 +1,9 @@
 import React from 'react';
-import { UploadCloud, Check, Info, MessageSquareText } from 'lucide-react';
+import { UploadCloud, Check, Info, MessageSquareText, X, FileText, Plus } from 'lucide-react';
 
 interface DocumentUploadStepProps {
-  fileName: string | null;
+  fileNames: string[];
+  onRemoveFile: (index: number) => void;
   fileSize: string | null;
   detectedPages: number | null;
   observaciones?: string;
@@ -11,7 +12,8 @@ interface DocumentUploadStepProps {
 }
 
 export const DocumentUploadStep: React.FC<DocumentUploadStepProps> = ({
-  fileName,
+  fileNames,
+  onRemoveFile,
   fileSize,
   detectedPages,
   observaciones = '',
@@ -33,41 +35,55 @@ export const DocumentUploadStep: React.FC<DocumentUploadStepProps> = ({
         <div className="border-2 border-dashed border-slate-300 hover:border-[#BD944D] bg-slate-50/80 rounded-2xl p-5 text-center transition-colors relative">
           <input
             type="file"
-            accept=".pdf,.doc,.docx"
+            multiple
+            accept=".pdf,.doc,.docx,image/*"
             onChange={onFileUpload}
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-            title="Seleccionar archivo"
+            title="Seleccionar archivos"
           />
 
           <div className="w-12 h-12 rounded-full bg-amber-100/90 text-[#a87823] flex items-center justify-center mx-auto mb-3 shadow-xs">
-            <UploadCloud className="w-6 h-6" />
+            {fileNames.length ? <Plus className="w-6 h-6" /> : <UploadCloud className="w-6 h-6" />}
           </div>
 
-          {fileName ? (
-            <>
-              <p className="text-xs font-bold text-slate-900 truncate max-w-xs mx-auto">
-                {fileName}
-              </p>
-              <p className="text-[11px] text-slate-500 mt-1">
-                {fileSize ? `Tamaño: ${fileSize}` : ''} {detectedPages ? `· ${detectedPages} páginas detectadas` : ''}
-              </p>
-
-              <div className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full mt-2.5">
-                <Check className="w-3.5 h-3.5" />
-                <span>Archivo listo para vinculación</span>
-              </div>
-            </>
-          ) : (
-            <>
-              <p className="text-xs font-bold text-slate-800">
-                Toca aquí para adjuntar tu tesis o documento (opcional)
-              </p>
-              <p className="text-[11px] text-slate-500 mt-1">
-                Formatos permitidos: PDF o Word (.doc, .docx)
-              </p>
-            </>
-          )}
+          <p className="text-xs font-bold text-slate-800">
+            {fileNames.length
+              ? 'Toca aquí para agregar otro archivo'
+              : 'Toca aquí para adjuntar tu tesis, documento o fotos (opcional)'}
+          </p>
+          <p className="text-[11px] text-slate-500 mt-1">
+            Puedes subir varios: PDF, Word (.doc, .docx) o fotos
+          </p>
         </div>
+
+        {fileNames.length > 0 && (
+          <div className="mt-2.5 space-y-2">
+            {fileNames.map((name, i) => (
+              <div key={`${name}-${i}`} className="flex items-center gap-2.5 p-2.5 bg-white rounded-xl border border-slate-200">
+                <div className="w-8 h-8 rounded-lg bg-amber-50 text-[#BD944D] flex items-center justify-center shrink-0">
+                  <FileText className="w-4 h-4" />
+                </div>
+                <span className="text-xs font-semibold text-slate-800 truncate flex-1">{name}</span>
+                <button
+                  type="button"
+                  onClick={() => onRemoveFile(i)}
+                  aria-label={`Quitar ${name}`}
+                  className="w-8 h-8 rounded-full bg-slate-100 hover:bg-red-50 text-slate-500 hover:text-red-600 flex items-center justify-center shrink-0 cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            ))}
+            <div className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 px-1">
+              <Check className="w-3.5 h-3.5" />
+              <span>
+                {fileNames.length} {fileNames.length === 1 ? 'archivo listo' : 'archivos listos'}
+                {fileSize ? ` · ${fileSize}` : ''}
+                {detectedPages ? ` · ${detectedPages} páginas aprox.` : ''}
+              </span>
+            </div>
+          </div>
+        )}
 
         <div className="flex items-start gap-1.5 text-[11px] font-semibold text-red-600 mt-2 px-1">
           <Info className="w-3.5 h-3.5 text-red-500 shrink-0 mt-px" />

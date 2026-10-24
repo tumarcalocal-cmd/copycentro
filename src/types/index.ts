@@ -24,6 +24,7 @@ export interface EmpastadoConfig {
   spineLettering: boolean;
   cdPocket: boolean;
   uploadedFileName: string | null;
+  uploadedFileNames?: string[];
   uploadedFileSize: string | null;
   detectedPages: number | null;
   observaciones?: string;

@@ -17,7 +17,7 @@ import { DocumentUploadStep } from './solicitar/DocumentUploadStep';
 import { SolicitudSummaryCard } from './solicitar/SolicitudSummaryCard';
 import { useFileUpload } from '../hooks/useFileUpload';
 import { formatEmpastadoMessage, sendWhatsAppWithUpload } from '../utils/whatsapp';
-import { getAttachment } from '../utils/attachmentStore';
+import { getAttachments } from '../utils/attachmentStore';
 
 interface SolicitarScreenProps {
   config: EmpastadoConfig;
@@ -41,7 +41,7 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
   const pasoDisenoRef = useRef<HTMLDivElement>(null);
   const [activeSubTab, setActiveSubTab] = useState<'solicitar' | 'disenos' | 'pedidos'>('solicitar');
 
-  const { handleFileUpload } = useFileUpload(setConfig);
+  const { handleFileUpload, handleRemoveFile } = useFileUpload(setConfig);
 
   useEffect(() => {
     if (shouldScrollToDesign && pasoDisenoRef.current) {
@@ -62,8 +62,8 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
 
   const handleSendWhatsApp = () =>
     sendWhatsAppWithUpload(
-      (fileUrl) => formatEmpastadoMessage(config, selectedColor.name, personalizacionesList, fileUrl),
-      config.uploadedFileName ? getAttachment('empastado') : null
+      (links) => formatEmpastadoMessage(config, selectedColor.name, personalizacionesList, links),
+      getAttachments('empastado')
     );
 
   return (
@@ -164,7 +164,8 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
 
       {/* STEP F & G: Documento y Observaciones */}
       <DocumentUploadStep
-        fileName={config.uploadedFileName}
+        fileNames={config.uploadedFileNames || []}
+        onRemoveFile={handleRemoveFile}
         fileSize={config.uploadedFileSize}
         detectedPages={config.detectedPages}
         observaciones={config.observaciones}
