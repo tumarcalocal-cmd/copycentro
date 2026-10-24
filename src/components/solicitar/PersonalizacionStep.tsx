@@ -32,6 +32,9 @@ export const PersonalizacionStep: React.FC<PersonalizacionStepProps> = ({
         <h2 className="text-xs font-bold text-slate-900">
           F. Grabado y Personalización
         </h2>
+        <span className="text-[11px] font-semibold text-[#875d14] bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full ml-1">
+          Costo adicional
+        </span>
       </div>
 
       <div className="space-y-2.5">
@@ -43,10 +46,10 @@ export const PersonalizacionStep: React.FC<PersonalizacionStepProps> = ({
             </div>
             <div>
               <span className="text-xs font-bold text-slate-900 block">
-                Escudo / Logo en dorado
+                Logo <span className="text-[#875d14]">$5.00</span>
               </span>
               <span className="text-[11px] text-slate-500">
-                UP, UTP, UDELAS, ISAE o corporativo
+                Escudo de UP, UTP, UDELAS, ISAE o corporativo en dorado
               </span>
             </div>
           </div>
@@ -66,10 +69,13 @@ export const PersonalizacionStep: React.FC<PersonalizacionStepProps> = ({
             </div>
             <div>
               <span className="text-xs font-bold text-slate-900 block">
-                Grabado en lomo
+                Lomo <span className="text-[#875d14]">$4.00</span>
               </span>
-              <span className="text-[11px] text-slate-500">
+              <span className="text-[11px] text-slate-500 block">
                 Título vertical y año grabado
+              </span>
+              <span className="text-[11px] font-semibold text-red-600 block">
+                Importante: solo para tesis de más de 100 páginas
               </span>
             </div>
           </div>
@@ -89,10 +95,10 @@ export const PersonalizacionStep: React.FC<PersonalizacionStepProps> = ({
             </div>
             <div>
               <span className="text-xs font-bold text-slate-900 block">
-                Bolsillo para CD / DVD
+                Grabado en CD y rotulado <span className="text-[#875d14]">$5.00</span>
               </span>
               <span className="text-[11px] text-slate-500">
-                En contratapa interior
+                Tu documento grabado en CD con etiqueta impresa
               </span>
             </div>
           </div>

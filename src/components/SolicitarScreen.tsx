@@ -55,9 +55,9 @@ export const SolicitarScreen: React.FC<SolicitarScreenProps> = ({
   const selectedColor = COVER_COLORS.find(c => c.id === config.colorId) || COVER_COLORS[4];
 
   const personalizacionesList = [
-    config.goldLogo ? 'Logo en dorado' : null,
-    config.spineLettering ? 'Grabado en lomo' : null,
-    config.cdPocket ? 'Bolsillo CD' : null,
+    config.goldLogo ? 'Logo ($5.00)' : null,
+    config.spineLettering ? 'Lomo ($4.00)' : null,
+    config.cdPocket ? 'Grabado en CD y rotulado ($5.00)' : null,
   ].filter(Boolean).join(' + ') || 'Sin extras';
 
   const handleSendWhatsApp = () =>

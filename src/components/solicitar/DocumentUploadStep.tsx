@@ -69,9 +69,21 @@ export const DocumentUploadStep: React.FC<DocumentUploadStepProps> = ({
           )}
         </div>
 
-        <div className="flex items-center gap-1.5 text-[11px] text-slate-500 mt-2 px-1">
-          <Info className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-          <span>El documento se compartirá directamente con el taller al confirmar la solicitud.</span>
+        <div className="flex items-start gap-1.5 text-[11px] font-semibold text-red-600 mt-2 px-1">
+          <Info className="w-3.5 h-3.5 text-red-500 shrink-0 mt-px" />
+          <span>Obligatorio si desea una cotización exacta de Impresión + Empastado.</span>
+        </div>
+      </div>
+
+      {/* STEP H: Tiempo de entrega */}
+      <div className="bg-slate-100/70 p-3.5 sm:p-4 rounded-2xl mb-5 border border-slate-200/70">
+        <div className="flex items-center gap-1.5 mb-2">
+          <span className="text-sm">⏱️</span>
+          <h2 className="text-xs font-bold text-slate-900">H. Tiempo de entrega</h2>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-3 space-y-1">
+          <p className="text-xs font-bold text-[#102338]">2 a 3 días hábiles</p>
+          <p className="text-[11px] text-slate-600">Entrega rápida disponible con recargo. Consúltalo por WhatsApp.</p>
         </div>
       </div>
 
